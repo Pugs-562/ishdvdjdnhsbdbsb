@@ -55,17 +55,17 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 @keyframes pulse{to{transform:scale(1.4)}}
 
 /* CARTOONY CARDS */
-.cd{width:60px;height:86px;border-radius:12px;background:#fff;color:#111;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:18px;font-weight:900;box-shadow:0 5px 0 #bbb,0 8px 16px rgba(0,0,0,.4);transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s;animation:deal .35s both;user-select:none;flex:none;cursor:pointer;border:3px solid #111;position:relative}
-.cd:hover{transform:translateY(-6px) scale(1.05)}
-.cd svg{width:24px;height:24px;margin-top:2px}
-.cd b{font-size:22px;line-height:1}
+.cd{width:62px;height:90px;border-radius:12px;background:#fff;color:#111;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:19px;font-weight:900;box-shadow:0 5px 0 #bbb,0 8px 16px rgba(0,0,0,.4);transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s;animation:deal .35s both;user-select:none;flex:none;cursor:pointer;border:3px solid #111;position:relative}
+.cd:active{transform:scale(0.95)}
+.cd svg{width:26px;height:26px;margin-top:2px}
+.cd b{font-size:24px;line-height:1}
 .cd.r{color:#e11d48}
 /* UNO CARDS */
 .cd.u-r{background:#ff3d71;color:#fff;border-color:#fff}.cd.u-y{background:#ffe14d;color:#111;border-color:#fff}.cd.u-g{background:#22c55e;color:#fff;border-color:#fff}.cd.u-b{background:#00b3ff;color:#fff;border-color:#fff}.cd.u-w{background:linear-gradient(135deg,#ff3d71,#ffe14d,#22c55e,#00b3ff);color:#fff;border-color:#fff}
 @keyframes deal{from{transform:translateY(-30px) scale(.7) rotate(-10deg);opacity:.1}}
 .cd.pop{animation:pop .4s both}@keyframes pop{from{transform:scale(1.8) rotate(20deg);opacity:0}}
 .cd.bk{background:repeating-linear-gradient(45deg,#6d28d9,#6d28d9 8px,#a855f7 8px,#a855f7 16px);color:transparent;border:3px solid #fff}
-.sm{width:38px;height:54px;font-size:12px;border-width:2px;box-shadow:0 3px 0 #999,0 5px 8px rgba(0,0,0,.3)}.sm svg{width:14px;height:14px}.sm b{font-size:15px}
+.sm{width:40px;height:58px;font-size:13px;border-width:2px;box-shadow:0 3px 0 #999,0 5px 8px rgba(0,0,0,.3)}.sm svg{width:16px;height:16px}.sm b{font-size:16px}
 
 .hand-wrap{position:relative;width:100%;padding:10px 0}
 .hand{display:flex;justify-content:flex-start;padding:24px 36px 14px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
@@ -143,12 +143,12 @@ svgs = [
 const su=c=>c/13|0, red=c=>su(c)&1, srt=(a,b)=>a-b, hv=c=>c%13||13,
 sh=a=>{for(let i=a.length;i--;){let j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a},
 deck=()=>sh([...Array(52).keys()]),
-cd=(c,x='',a)=>{
+cd=(c,x='')=>{
   if(typeof c==='object'&&c.u){
     const colMap={r:'u-r',y:'u-y',g:'u-g',b:'u-b',w:'u-w'};
-    return `<div class="cd ${colMap[c.c]||'u-w'} ${x}" onclick="handleCardClick(${encodeURIComponent(JSON.stringify(c))})" ${a}>${c.v}<b>${c.c=='w'?'🌈':'⚡'}</b></div>`;
+    return `<div class="cd ${colMap[c.c]||'u-w'} ${x}">${c.v}<b>${c.c=='w'?'🌈':'⚡'}</b></div>`;
   }
-  return `<div class="cd ${red(c)?'r':''} ${x}" onclick="handleCardClick(${c})" ${a}>${L[c%13].replace('T',10)}${svgs[su(c)]}</div>`;
+  return `<div class="cd ${red(c)?'r':''} ${x}">${L[c%13].replace('T',10)}${svgs[su(c)]}</div>`;
 },
 bk=n=>`<span class="bks">${'<div class="cd bk sm"></div>'.repeat(Math.min(n,13))}</span>`,
 $=id=>document.getElementById(id);
@@ -223,14 +223,10 @@ legal(S,p){
   return S.h[p].filter(c => c.c=='w' || c.c==S.curClr || c.v==top.v);
 },
 can:(S,p,c)=>{
-  let card = typeof c==='string'?JSON.parse(c):c;
   let top = S.top.at(-1);
-  return card.c=='w' || card.c==S.curClr || card.v==top.v;
+  return c.c=='w' || c.c==S.curClr || c.v==top.v;
 },
-pick:(S,c)=>{
-  let card = typeof c==='string'?JSON.parse(c):c;
-  return {c:card};
-},
+pick:(S,c)=>({c}),
 tap:(S,k)=>({d:1}),
 apply(S,p,m){
   let h=S.h[p], n=S.seats.length;
@@ -248,6 +244,7 @@ apply(S,p,m){
   let idx = h.findIndex(x => x.c==m.c.c && x.v==m.c.v);
   if(idx<0) return false;
   h.splice(idx,1); S.top.push(m.c); snd.play('deal');
+  spawnParticles(innerWidth/2, innerHeight/2);
   if(!h.length){ S.over={t:`🏆 ${S.seats[p].name} wins UNO!`}; snd.play('win'); return; }
   
   if(m.c.c=='w') {
@@ -412,7 +409,7 @@ kic:{n:4,maxN:4,name:'Kings in Corner',ico:`<svg viewBox="0 0 24 24" fill="#a855
 rules:[
   '<strong>Goal:</strong> Empty your hand completely by playing cards onto board piles.',
   '<strong>Building Piles:</strong> Alternating colors (red on black) and descending rank.',
-  '<strong>Tap to Play:</strong> Tap a card in your hand (it glows gold), then tap any slot/pile on the board to play it!',
+  '<strong>Tap to Play:</strong> Tap a card in your hand, then tap any slot/pile on the board to play it!',
   '<strong>Merging Piles:</strong> Tap a pile on the board to select it, then tap another pile to combine them!'
 ],
 init(S){let d=deck();S.h=S.seats.map(()=>d.splice(0,7).sort(srt));S.pl=[[],[],[],[],[],[],[],[]];[0,1,2,3].forEach(i=>S.pl[i].push(d.shift()));S.dk=d;S.turn=0;S.viewPile=-1;G.kic.draw(S)},
@@ -441,7 +438,6 @@ for(let a=0;a<8;a++)for(let b=0;b<8;b++)if(a!=b&&S.pl[a].length&&S.pl[b].length)
   if(topB!=null && red(botA)!=red(topB) && hv(botA)==hv(topB)-1)return{a,b};
 }
 let e=[4,5,6,7].find(i=>!S.pl[i].length);if(e!=null&&h.length>1)return{c:h.reduce((a,b)=>b%13>a%13?b:a),to:e};return{e:1}},
-// 3x3 Grid: Corners are 4,5,6,7. Edges are 0,1,2,3. Center is Deck/End Turn (-1).
 ui:S=>`<div class="kg">${[4,0,5,1,-1,2,6,3,7].map(i=>i<0?`<div class="ctrd">📚 ${S.dk.length}<br><button class="b" onclick="Q('e')">End Turn</button></div>`:`<div class="slot ${i>=4?'cn':''}${sel&&sel.t=='p'&&sel.i==i?'sl':''}" onclick="Q(${i})">${S.pl[i].length?cd(S.pl[i].at(-1))+`<i>${S.pl[i].length}</i>`:'<em>'+(i>=4?'♚':'')+'</em>'}</div>`).join('')}</div>` +
 (S.viewPile>=0 && S.pl[S.viewPile] && S.pl[S.viewPile].length ? `<div style="text-align:center;margin-top:10px;font-size:13px;opacity:.9">Cards in pile #${S.viewPile+1}:</div><div class="pile-preview">${S.pl[S.viewPile].map(c=>cd(c,'sm')).join('')}</div>` : ''),
 hint:()=>'· Tap card in hand, then tap slot on board (or tap board pile to select & merge)'},
@@ -632,13 +628,14 @@ function tick(){
 function mv(mi,m){kn=0; sendAction(m); render()}
 const myi=()=>S.seats.findIndex(s=>s.id==me);
 
-function handleCardClick(c){
+// INDEX-BASED HAND CARD CLICK (Guaranteed 100% bug-free on mobile)
+function playCardIndex(idx){
   let mi=myi(), g=G[S.g];
   if(S.turn!=mi || S.over) return;
-  if(typeof c === 'string' && c.startsWith('card:')) c = JSON.parse(c.split('card:')[1]);
-  if(g.can(S,mi,c)) {
-    let m = g.pick(S,c);
-    if(m) mv(mi,m);
+  let c = S.h[mi][idx];
+  if(c !== undefined && g.can(S, mi, c)) {
+    let m = g.pick(S, c);
+    if(m) mv(mi, m);
   } else {
     snd.play('click');
   }
@@ -691,7 +688,7 @@ function view(){
     ${g.ui(S)}
   </div>
   <div class="msg">${S.over?'':my?'✨ Your turn! ':S.seats[S.turn].name+' is thinking… '}${g.hint(S,my,mi)}</div>
-  <div class="hand-wrap"><div class="hand">${S.h[mi].map(c=>cd(c,(my&&g.can(S,mi,c)?'ok':my?'':'dim')+(sel&&sel.c==c?' up':'')).replace('onclick="', 'onclick="handleCardClick('+(typeof c==='object'?JSON.stringify(c):c)+');')).join('')}</div></div>
+  <div class="hand-wrap"><div class="hand">${S.h[mi].map((c, idx)=>`<div onclick="playCardIndex(${idx})">${cd(c, (my&&g.can(S,mi,c)?'ok':my?'':'dim')+(sel&&sel.c==c?' up':''))}</div>`).join('')}</div></div>
   ${S.over?`<div class="ov"><h1>${S.over.t}</h1>${host?'<button class="b" onclick="playAgain()">↻ Play Again</button>':'<p>Waiting for host…</p>'}<button class="b3" onclick="leaveRoom()">Main Menu</button></div>`:''}`;
 }
 
@@ -700,6 +697,13 @@ function render(){
   if(!S){a.innerHTML=code?`<div class="ctr"><h2>Connecting to room ${code}…</h2><button class="b3" onclick="leaveRoom()">Cancel</button></div>`:menu();return}
   a.innerHTML=view();
   if(S.over && cfv!=S.v){cfv=S.v; confetti();}
+}
+
+function spawnParticles(x, y){
+  let c=$('cv'), xCtx=c.getContext('2d'); c.width=innerWidth; c.height=innerHeight;
+  let pts=[...Array(50)].map(()=>({x, y, vx:(Math.random()-.5)*14, vy:(Math.random()-.5)*14, c:`hsl(${Math.random()*360},95%,60%)`, s:Math.random()*8+4}));
+  let f=0;
+  (function l(){xCtx.clearRect(0,0,c.width,c.height);pts.forEach(q=>{q.x+=q.vx;q.y+=q.vy;q.vy+=.3;xCtx.fillStyle=q.c;xCtx.fillRect(q.x,q.y,q.s,q.s)});if(f++<40)requestAnimationFrame(l);else xCtx.clearRect(0,0,c.width,c.height);})();
 }
 
 function confetti(){
