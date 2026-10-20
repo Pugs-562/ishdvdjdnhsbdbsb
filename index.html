@@ -13,7 +13,7 @@ body{margin:0;min-height:100vh;color:var(--tx);font:800 16px system-ui,sans-seri
 @keyframes bg{50%{background-position:100% 50%}}
 .f{position:fixed;bottom:-60px;opacity:.12;animation:fl linear infinite;pointer-events:none}
 @keyframes fl{to{transform:translateY(-120vh) rotate(360deg)}}
-#cv{position:fixed;inset:0;pointer-events:none;z-index:60}
+#cv{position:fixed;inset:0;pointer-events:none;z-index:60;background:transparent}
 #a{max-width:960px;margin:auto;padding:16px;position:relative;z-index:10}
 h1{font-size:clamp(36px,9vw,68px);margin:16px 0 0;text-align:center;letter-spacing:2px;text-shadow:0 0 24px #ff3d71}
 h1 span{background:linear-gradient(90deg,#ffe14d,#ff3d71,#4dd2ff,#ffe14d);background-size:300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 4s linear infinite}
@@ -50,7 +50,8 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 .msg{text-align:center;min-height:28px;margin:10px;font-size:18px;text-shadow:0 2px 6px #0008}
 
 /* CARDS & HAND SWIPE ENHANCEMENTS */
-.cd{width:56px;height:80px;border-radius:10px;background:#fff;color:#111;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:20px;font-weight:900;box-shadow:0 4px 14px rgba(0,0,0,.4);transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s;animation:deal .3s both;user-select:none;flex:none;scroll-snap-align:center}
+.cd{width:56px;height:80px;border-radius:10px;background:#fff;color:#111;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:20px;font-weight:900;box-shadow:0 4px 14px rgba(0,0,0,.4);transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s;animation:deal .3s both;user-select:none;flex:none;scroll-snap-align:center;cursor:grab}
+.cd:active{cursor:grabbing}
 .cd b{font-size:26px;line-height:1}.cd.r{color:#e11d48}
 @keyframes deal{from{transform:translateY(-20px) scale(.8);opacity:.2}}
 .cd.pop{animation:pop .4s both}@keyframes pop{from{transform:scale(1.8) rotate(20deg);opacity:0}}
@@ -73,6 +74,7 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 .slot{width:68px;height:90px;border:3px dashed rgba(255,255,255,.6);border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;background:rgba(0,0,0,.15);transition:.2s}
 .slot:hover{background:rgba(255,255,255,.2)}
 .slot.cn{border-color:#ffe14d}.slot.sl{box-shadow:0 0 20px 6px #4dd2ff;border-color:#4dd2ff}
+.slot.drag-over{background:rgba(77,210,255,.3);border-color:#4dd2ff;transform:scale(1.05)}
 .slot i{position:absolute;right:-8px;top:-10px;background:#ff3d71;border-radius:99px;font-size:12px;padding:2px 7px;font-style:normal;font-weight:900}
 .slot em{opacity:.6;font-style:normal;font-size:30px}
 .ctrd{text-align:center;font-size:14px;font-weight:700}.ctrd button{padding:8px 12px;font-size:13px;margin-top:6px}
@@ -80,10 +82,8 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;animation:up .4s}
 .ov h1{font-size:clamp(30px,7vw,52px)}
 #m .md{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px}
-.c2{background:linear-gradient(160deg,#3b1b8f,#16466e);border-radius:24px;padding:24px;max-width:560px;max-height:88vh;overflow:auto;animation:pop .35s both;box-shadow:0 0 50px #4dd2ff;border:3px solid rgba(255,255,255,.2)}
+.c2{background:linear-gradient(160deg,#3b1b8f,#16466e);border-radius:24px;padding:24px;max-width:600px;max-height:88vh;overflow:auto;animation:pop .35s both;box-shadow:0 0 50px #4dd2ff;border:3px solid rgba(255,255,255,.2)}
 .c2 li{margin:10px 0;font-weight:600;line-height:1.5;font-size:15px}
-
-/* KINGS IN THE CORNER PILE DRAWER */
 .pile-preview{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:14px;background:rgba(0,0,0,.4);border-radius:18px;margin-top:10px}
 </style>
 </head>
@@ -123,7 +123,7 @@ const snd = {
 const L="A23456789TJQK", SU="♣♦♠♥", su=c=>c/13|0, red=c=>su(c)&1, srt=(a,b)=>a-b, hv=c=>c%13||13,
 sh=a=>{for(let i=a.length;i--;){let j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a},
 deck=()=>sh([...Array(52).keys()]),
-cd=(c,x='',a)=>`<div class="cd ${red(c)?'r':''} ${x}" ${a}>${L[c%13].replace('T',10)}<b>${SU[su(c)]}</b></div>`,
+cd=(c,x='',a)=>`<div class="cd ${red(c)?'r':''} ${x}" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'card:${c}')" ${a}>${L[c%13].replace('T',10)}<b>${SU[su(c)]}</b></div>`,
 bk=n=>`<span class="bks">${'<div class="cd bk sm"></div>'.repeat(Math.min(n,13))}</span>`,
 $=id=>document.getElementById(id);
 
@@ -132,7 +132,7 @@ for(let s=0;s<4;s++)for(let a=0;a<13;a++)for(let b=a+2;b<13;b++){let u=[];for(le
 const dw=h=>{let b=h.reduce((t,c)=>t+Math.min(c%13+1,10),0);for(let m of melds(h))b=Math.min(b,dw(h.filter(c=>!m.includes(c))));return b};
 
 let S, host=1, R=null, iv, T, cfv=-1, sel=0, kn=0, code='', nm='', me=Math.random().toString(36).slice(2,8);
-let botDiff = 'medium'; // easy, medium, hard
+let botDiff = 'medium';
 let maxPlayersOpt = 4;
 let autofillBots = true;
 let lastTurnPlayer = -1;
@@ -140,7 +140,14 @@ let lastTurnPlayer = -1;
 // --- GAMES DEFINITION ---
 const G={
 hearts:{n:4,maxN:4,name:'Hearts',ico:'♥️',col:'#ff3d71',p:'2–4 players',d:'Dodge hearts and the Queen of Spades. Lowest score wins!',
-rules:['2–4 players. Whoever holds the 2♣ must lead it.','Follow suit if possible. Highest card of led suit wins trick.','Every ♥ = 1 pt, Q♠ = 13 pts. Lowest score wins!','Shoot the Moon: take all 26 pts to give everyone else 26!'],
+rules:[
+  '<strong>Goal:</strong> Avoid taking penalty cards (Hearts and the Queen of Spades). Lowest score at the end wins!',
+  '<strong>Leading:</strong> The player holding the 2♣ must lead it for the first trick.',
+  '<strong>Following Suit:</strong> You must follow the led suit if you have it. If out of that suit, you may discard any card (including penalty cards!).',
+  '<strong>Winning Tricks:</strong> The highest card of the led suit wins the trick and takes all penalty points inside it.',
+  '<strong>Scoring:</strong> Each Heart = 1 point. The Queen of Spades (♠Q) = 13 points.',
+  '<strong>Shoot the Moon:</strong> If you capture ALL 13 Hearts and the Queen of Spades in one round, 26 points are subtracted from your score (or added to opponents instead)!'
+],
 init(S){let d=deck(), cpr=Math.floor(52/S.seats.length);S.h=S.seats.map((_,i)=>d.slice(i*cpr,(i+1)*cpr).sort(srt));S.tr=[];S.lt=[];S.pt=S.seats.map(()=>0);S.hb=0;S.first=1;let starter=S.h.findIndex(h=>h.includes(1));S.turn=starter>=0?starter:0},
 legal(S,p){let h=S.h[p],t=S.tr;if(t.length){let f=h.filter(c=>su(c)==su(t[0].c));return f.length?f:h}if(S.first&&h.includes(1))return[1];let n=h.filter(c=>su(c)!=3);return S.hb||!n.length?h:n},
 can:(S,p,c)=>G.hearts.legal(S,p).includes(c),pick:(S,c)=>({c}),
@@ -151,12 +158,17 @@ if(!h.length){if(S.pt.includes(26))S.pt=S.pt.map(x=>x==26?0:26);let b=S.pt.index
 bot(S,p){let l=[...G.hearts.legal(S,p)];
 if(botDiff=='easy') return {c:l[Math.floor(Math.random()*l.length)]};
 l.sort((a,b)=>hv(a)-hv(b));let t=S.tr;
-if(t.length&&!l.some(c=>su(c)==su(t[0].c)))return{c:l.includes(37)?37:l.sort((a,b)=>(su(b)==3)-(su(a)==3)||hv(b)-hv(a))[0]};return{c:botDiff=='hard'?l[0]:l[Math.floor(l.length/2)]||l[0]}},
+if(t.length&&!l.some(c=>su(c)==su(t[0].c)))return{c:l.includes(37)?37:l.sort((a,b)=>(su(b)==3)-(su(b)==3)||hv(b)-hv(a))[0]};return{c:botDiff=='hard'?l[0]:l[Math.floor(l.length/2)]||l[0]}},
 ui:S=>`<div class="trick">${S.tr.map(t=>`<div>${cd(t.c,'pop')}<small>${S.seats[t.p].name}</small></div>`).join('')||'<span style="opacity:.8">Last trick: '+(S.lt.map(t=>SU[su(t.c)]+L[t.c%13]).join(' ')||'—')+'</span>'}</div>`,
 hint:S=>`· Scores: ${S.seats.map((s,i)=>s.name+': '+S.pt[i]).join(' | ')} ${S.hb?'· ♥ broken':''}`},
 
 c8:{n:4,maxN:4,name:'Crazy Eights',ico:'8️⃣',col:'#ffb020',p:'2–4 players',d:'Match suit or rank. 8s are wild. Empty your hand first!',
-rules:['Each player gets 5 cards. Top card face up.','Match top card suit/rank. 8s can change the active suit.','Can’t play? Tap the draw pile to draw a card and end your turn.'],
+rules:[
+  '<strong>Goal:</strong> Be the first player to get rid of all the cards in your hand.',
+  '<strong>Gameplay:</strong> On your turn, play a card that matches either the **Suit** or the **Rank** of the top card on the discard pile.',
+  '<strong>Wild Eights:</strong> 8s are wild! You can play an 8 on any card and change the active suit to whatever you choose.',
+  '<strong>No Match?</strong> If you cannot play, tap the face-down draw pile to draw a card and end your turn.'
+],
 init(S){let d=deck(),t;S.h=S.seats.map(()=>d.splice(0,5).sort(srt));do{t=d.shift()}while(t%13==7&&d.push(t));S.dk=d;S.top=[t];S.su=su(t);S.turn=0},
 legal(S,p){let t=S.top.at(-1);return S.h[p].filter(c=>c%13==7||su(c)==S.su||c%13==t%13)},
 can:(S,p,c)=>G.c8.legal(S,p).includes(c),pick:(S,c)=>({c}),tap:(S,k)=>({d:1}),
@@ -170,11 +182,17 @@ return{c:l.find(c=>c%13!=7)??l[0]}},
 ui:S=>`<div class="row"><div onclick="Q('d')" style="cursor:pointer;text-align:center"><div class="cd bk"></div><small style="display:block;margin-top:4px;font-weight:700">${S.dk.length} cards</small></div>${cd(S.top.at(-1),'pop')}<div class="sui">${SU[S.su]}</div></div>`,
 hint:(S,my,mi)=>my&&!G.c8.legal(S,mi).length?'· No play: tap the draw pile':''},
 
-kic:{n:4,maxN:4,name:'Kings in the Corner',ico:'👑',col:'#a855f7',p:'2–4 players',d:'Build alternating-color piles. Only Kings claim corners!',
-rules:['Build downward alternating colors (red 6 on black 7).','Corner spots starting with ♚ are only for Kings!','Tap any pile to view all cards inside that pile!'],
+kic:{n:4,maxN:4,name:'Kings in the Corner',ico:'👑',col:'#a855f7',p:'2–4 players',d:'Build alternating-color piles. Drag piles or cards freely!',
+rules:[
+  '<strong>Goal:</strong> Empty your hand completely by playing cards onto the 8 board piles.',
+  '<strong>Building Piles:</strong> Cards must be built in **alternating colors** (red on black, black on red) and **descending rank** (e.g., Red 6 on Black 7).',
+  '<strong>Dragging Piles:</strong> You can drag an entire pile onto another pile if the bottom card of the moving stack fits onto the top card of the destination pile.',
+  '<strong>Empty Spaces:</strong> Moving an entire pile to another column leaves an empty working space where **any card** from your hand can be placed.',
+  '<strong>Corner Piles (with ♚):</strong> The 4 corner spaces are strictly reserved for **Kings** only!'
+],
 init(S){let d=deck();S.h=S.seats.map(()=>d.splice(0,7).sort(srt));S.pl=[[],[],[],[],[],[],[],[]];[0,1,2,3].forEach(i=>S.pl[i].push(d.shift()));S.dk=d;S.turn=0;S.viewPile=-1;G.kic.draw(S)},
 draw(S){if(S.dk.length)S.h[S.turn].push(S.dk.shift());S.h[S.turn].sort(srt)},
-ok(S,c,i){let t=S.pl[i].at(-1);return t==null?(i<4||c%13==12):(red(c)!=red(t)&&c%13==t%13-1)},
+ok(S,c,i){let t=S.pl[i].at(-1);return t==null?(i>=4||c%13==12):(red(c)!=red(t)&&c%13==t%13-1)},
 can:()=>1,pick:(S,c)=>{sel={t:'h',c};snd.play('click');render()},
 tap(S,i){
   if(i=='e'){sel=0;S.viewPile=-1;snd.play('click');return{e:1}}
@@ -187,17 +205,29 @@ tap(S,i){
 },
 apply(S,p,m){let h=S.h[p],K=G.kic;if(m.e){S.turn=(p+1)%S.seats.length;K.draw(S);return}
 if(m.c!=null){if(!h.includes(m.c)||!K.ok(S,m.c,m.to))return false;h.splice(h.indexOf(m.c),1);S.pl[m.to].push(m.c);if(!h.length){S.over={t:`👑 ${S.seats[p].name} wins!`};snd.play('win')};return}
-let A=S.pl[m.a];if(m.a==m.b||!A||!A.length||!K.ok(S,A[0],m.b))return false;S.pl[m.b].push(...A);S.pl[m.a]=[]},
-bot(S,p){let h=S.h[p],K=G.kic;for(let c of h.filter(c=>c%13==12))for(let i=4;i<8;i++)if(K.ok(S,c,i))return{c,to:i};
-for(let c of h)for(let i=0;i<8;i++)if(S.pl[i].length&&K.ok(S,c,i))return{c,to:i};
-for(let a=0;a<8;a++)for(let b=0;b<8;b++)if(a!=b&&S.pl[a].length&&S.pl[b].length&&K.ok(S,S.pl[a][0],b))return{a,b};
-let e=[0,1,2,3].find(i=>!S.pl[i].length);if(e!=null&&h.length>1)return{c:h.reduce((a,b)=>b%13>a%13?b:a),to:e};return{e:1}},
-ui:S=>`<div class="kg">${[4,0,5,3,-1,1,6,2,7].map(i=>i<0?`<div class="ctrd">📚 ${S.dk.length}<br><button class="b" onclick="Q('e')">End Turn</button></div>`:`<div class="slot ${i>3?'cn':''}${sel&&sel.t=='p'&&sel.i==i?'sl':''}" onclick="Q(${i})">${S.pl[i].length?cd(S.pl[i].at(-1))+`<i>${S.pl[i].length}</i>`:'<em>'+(i>3?'♚':'')+'</em>'}</div>`).join('')}</div>` +
+let A=S.pl[m.a], B=S.pl[m.b];if(m.a==m.b||!A||!A.length||!B)return false;
+let topB=B.at(-1), bottomA=A[0];
+if(topB==null){if(m.b<4 && bottomA%13!=12)return false;} else {if(red(bottomA)==red(topB)||hv(bottomA)!=hv(topB)-1)return false;}
+B.push(...A); S.pl[m.a]=[];},
+bot(S,p){let h=S.h[p],K=G.kic;for(let c of h.filter(c=>c%13==12))for(let i=0;i<4;i++)if(K.ok(S,c,i))return{c,to:i};
+for(let c of h)for(let i=0;i<8;i++)if(K.ok(S,c,i))return{c,to:i};
+for(let a=0;a<8;a++)for(let b=0;b<8;b++)if(a!=b&&S.pl[a].length&&S.pl[b].length){
+  let topB=S.pl[b].at(-1), botA=S.pl[a][0];
+  if(topB!=null && red(botA)!=red(topB) && hv(botA)==hv(topB)-1)return{a,b};
+}
+let e=[4,5,6,7].find(i=>!S.pl[i].length);if(e!=null&&h.length>1)return{c:h.reduce((a,b)=>b%13>a%13?b:a),to:e};return{e:1}},
+ui:S=>`<div class="kg">${[0,4,1,5,-1,6,2,7,3].map(i=>i<0?`<div class="ctrd">📚 ${S.dk.length}<br><button class="b" onclick="Q('e')">End Turn</button></div>`:`<div class="slot ${i>=4?'cn':''}${sel&&sel.t=='p'&&sel.i==i?'sl':''}" onclick="Q(${i})" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');let d=event.dataTransfer.getData('text/plain');if(d.startsWith('card:')) P(parseInt(d.split(':')[1])); else if(d.startsWith('pile:')) mv(myi(),{a:parseInt(d.split(':')[1]),b:${i}})">${S.pl[i].length?`<div draggable="true" ondragstart="event.dataTransfer.setData('text/plain','pile:${i}')" style="display:inline-block">${cd(S.pl[i].at(-1))}</div>`+`<i>${S.pl[i].length}</i>`:'<em>'+(i>=4?'♚':'')+'</em>'}</div>`).join('')}</div>` +
 (S.viewPile>=0 && S.pl[S.viewPile] && S.pl[S.viewPile].length ? `<div style="text-align:center;margin-top:10px;font-size:13px;opacity:.9">Cards in pile #${S.viewPile+1}:</div><div class="pile-preview">${S.pl[S.viewPile].map(c=>cd(c,'sm')).join('')}</div>` : ''),
-hint:()=>'· Tap card → pile (or tap pile to view contents)'},
+hint:()=>'· Drag cards/piles or tap to combine & play'},
 
 gin:{n:2,maxN:2,name:'Gin Rummy',ico:'🃏',col:'#22d3a0',p:'2 players',d:'Make sets and runs, then knock with low deadwood.',
-rules:['Sets (same rank) & Runs (same suit seq).','Knock when deadwood ≤ 10.'],
+rules:[
+  '<strong>Goal:</strong> Form your 10 cards into **Sets** (3 or 4 of a kind, e.g. three 7s) and **Runs** (3+ consecutive cards of the same suit, e.g. 4♠, 5♠, 6♠).',
+  '<strong>Deadwood:</strong> Unmatched cards left over in your hand are called Deadwood. Face cards = 10 pts, Aces = 1 pt, Numbers = face value.',
+  '<strong>Turn Structure:</strong> 1) **Draw** a card from either the face-down Stock pile or face-up Discard pile. 2) **Discard** one card from your hand.',
+  '<strong>Knocking:</strong> When your remaining unmatched Deadwood total is **10 points or less**, you can check "Knock" when discarding to end the round!',
+  '<strong>Gin Bonus:</strong> If you knock with 0 Deadwood, it is a **Gin**, earning a massive 25-point bonus plus your opponent\'s unmatched deadwood!'
+],
 init(S){let d=deck();S.h=[d.splice(0,10).sort(srt),d.splice(0,10).sort(srt)];S.up=[d.shift()];S.dk=d;S.turn=0;S.ph=0},
 can:S=>S.ph==1,pick:(S,c)=>({x:c,k:kn?1:0}),
 tap:(S,k)=>S.ph?0:{d:k},
@@ -207,8 +237,8 @@ if(m.k){let o=S.h[1-p],a=dw(h),b=dw(o),w=p,pts=b-a+(a?0:25);if(a>=b){w=1-p;pts=a
 if(S.dk.length<3){S.over={t:'Stock ran out: draw game!'};return}S.ph=0;S.turn=1-p},
 bot(S,p){let h=S.h[p];if(!S.ph){let u=S.up.at(-1),H=[...h,u],b=Math.min(...H.map(x=>dw(H.filter(y=>y!=x))));return{d:b<dw(h)?'u':'s'}}
 let b=h.map(x=>[dw(h.filter(y=>y!=x)),x]).sort((a,b)=>a[0]-b[0])[0];return{x:b[1],k:b[0]<=7?1:0}},
-ui:S=>`<div class="row"><div onclick="Q('s')" style="cursor:pointer;text-align:center"><div class="cd bk"></div><small style="display:block;margin-top:4px;font-weight:700">${S.dk.length}</small></div><div onclick="Q('u')" style="cursor:pointer">${cd(S.up.at(-1),'ok')}</div><button class="${kn?'b':'b3'}" onclick="kn=!kn;snd.play('click');render()">${kn?'🔔 Knock armed':'🔔 Knock'}</button></div>`,
-hint:(S,my,mi)=>`· ${my?(S.ph?'Discard a card':'Draw: stock or discard'):''} · Deadwood ${dw(S.h[mi])}`}
+ui:S=>`<div class="row"><div onclick="Q('s')" style="cursor:pointer;text-align:center" ondragover="event.preventDefault()" ondrop="event.preventDefault();Q('s')"><div class="cd bk"></div><small style="display:block;margin-top:4px;font-weight:700">${S.dk.length} Stock</small></div><div onclick="Q('u')" style="cursor:pointer" ondragover="event.preventDefault()" ondrop="event.preventDefault();Q('u')">${cd(S.up.at(-1),'ok')}</div><button class="${kn?'b':'b3'}" onclick="kn=!kn;snd.play('click');render()">${kn?'🔔 Knock armed':'🔔 Knock'}</button></div>`,
+hint:(S,my,mi)=>`· ${my?(S.ph?'Discard a card (drag to discard pile or click)':'Draw from stock or discard'):''} · Deadwood: ${dw(S.h[mi])}`}
 };
 
 // --- PEERJS MULTIPLAYER ---
