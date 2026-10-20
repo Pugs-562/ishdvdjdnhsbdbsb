@@ -26,7 +26,7 @@ input:focus,select:focus{border-color:#ffe14d;box-shadow:0 0 16px rgba(255,225,7
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .tile{background:rgba(255,255,255,.08);backdrop-filter:blur(14px);border-radius:24px;padding:20px;border:3px solid var(--c);box-shadow:0 0 24px -4px var(--c);transition:.25s;animation:up .5s both}
 .tile:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:0 0 42px 4px var(--c)}
-.tile i{font-size:48px;font-style:normal;display:block;animation:bob 2.5s ease-in-out infinite}
+.tile svg{width:48px;height:48px;display:block;animation:bob 2.5s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-8px) rotate(8deg)}}
 @keyframes up{from{transform:translateY(30px);opacity:0}}
 .tile h3{margin:8px 0 4px;font-size:22px}.tile p{margin:6px 0;font-weight:600;opacity:.9;font-size:14px}.tile small{opacity:.75;font-size:13px}
@@ -49,27 +49,29 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 .trick{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.trick div{text-align:center}.trick small{display:block;margin-top:4px;font-weight:700}
 .msg{text-align:center;min-height:28px;margin:10px;font-size:18px;text-shadow:0 2px 6px #0008}
 
-/* AUTOMATIC SHUFFLER DEALER ANIMATION */
-.shuffler{position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#ffe14d;color:#111;padding:4px 16px;border-radius:99px;font-weight:900;font-size:12px;box-shadow:0 4px 12px #0008;z-index:20;display:flex;align-items:center;gap:6px;transition:transform .4s ease}
+/* SHUFFLER DEALER ANIMATION */
+.shuffler{position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#ffe14d;color:#111;padding:4px 16px;border-radius:99px;font-weight:900;font-size:12px;box-shadow:0 4px 12px #0008;z-index:20;display:flex;align-items:center;gap:6px}
 .shuffler-arm{width:12px;height:12px;background:#ff3d71;border-radius:50%;display:inline-block;animation:pulse .8s infinite alternate}
 @keyframes pulse{to{transform:scale(1.4)}}
 
 /* CARTOONY CARDS */
-.cd{width:60px;height:88px;border-radius:12px;background:#fff;color:#111;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:20px;font-weight:900;box-shadow:0 6px 0 #bbb,0 10px 18px rgba(0,0,0,.4);transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s;animation:deal .35s both;user-select:none;flex:none;scroll-snap-align:center;cursor:grab;border:3px solid #111;position:relative}
-.cd:active{cursor:grabbing;transform:scale(1.08)}
-.cd b{font-size:28px;line-height:1}.cd.r{color:#e11d48}
+.cd{width:62px;height:90px;border-radius:12px;background:#fff;color:#111;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:19px;font-weight:900;box-shadow:0 6px 0 #bbb,0 10px 18px rgba(0,0,0,.4);transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s;animation:deal .35s both;user-select:none;flex:none;cursor:pointer;border:3px solid #111;position:relative}
+.cd:hover{transform:translateY(-8px) scale(1.05)}
+.cd svg{width:26px;height:26px;margin-top:2px}
+.cd b{font-size:24px;line-height:1}
+.cd.r{color:#e11d48}
 /* UNO CARDS */
 .cd.u-r{background:#ff3d71;color:#fff;border-color:#fff}.cd.u-y{background:#ffe14d;color:#111;border-color:#fff}.cd.u-g{background:#22c55e;color:#fff;border-color:#fff}.cd.u-b{background:#00b3ff;color:#fff;border-color:#fff}.cd.u-w{background:linear-gradient(135deg,#ff3d71,#ffe14d,#22c55e,#00b3ff);color:#fff;border-color:#fff}
 @keyframes deal{from{transform:translateY(-30px) scale(.7) rotate(-10deg);opacity:.1}}
 .cd.pop{animation:pop .4s both}@keyframes pop{from{transform:scale(1.8) rotate(20deg);opacity:0}}
 .cd.bk{background:repeating-linear-gradient(45deg,#6d28d9,#6d28d9 8px,#a855f7 8px,#a855f7 16px);color:transparent;border:3px solid #fff}
-.sm{width:40px;height:58px;font-size:14px;border-width:2px;box-shadow:0 3px 0 #999,0 6px 10px rgba(0,0,0,.3)}.sm b{font-size:18px}
+.sm{width:40px;height:58px;font-size:13px;border-width:2px;box-shadow:0 3px 0 #999,0 6px 10px rgba(0,0,0,.3)}.sm svg{width:16px;height:16px}.sm b{font-size:16px}
 
 .hand-wrap{position:relative;width:100%;padding:10px 0}
-.hand{display:flex;justify-content:flex-start;padding:24px 36px 14px;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(to right,transparent 0%,black 5%,black 95%,transparent 100%)}
-.hand .cd{margin-left:-20px;cursor:grab}.hand .cd:first-child{margin-left:0}
-.cd.ok{box-shadow:0 0 18px 6px #ffe14d,0 6px 0 #bbb;transform:translateY(-8px)}
-.hand .cd.ok:hover,.cd.up{transform:translateY(-26px) scale(1.1) rotate(2deg);z-index:20}
+.hand{display:flex;justify-content:flex-start;padding:24px 36px 14px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+.hand .cd{margin-left:-20px}.hand .cd:first-child{margin-left:0}
+.cd.ok{box-shadow:0 0 18px 6px #ffe14d,0 6px 0 #bbb;transform:translateY(-6px)}
+.cd.ok:hover,.cd.up{transform:translateY(-26px) scale(1.1) rotate(2deg);z-index:20}
 .cd.dim{filter:brightness(.6);opacity:.75}
 
 /* TURN BANNER */
@@ -78,14 +80,14 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 @keyframes pulseTurn{to{box-shadow:0 0 80px #4dd2ff;transform:translate(-50%,-50%) scale(1.08)}}
 
 .kg{display:grid;grid-template-columns:repeat(3,76px);gap:12px;justify-items:center}
-.slot{width:72px;height:96px;border:3px dashed rgba(255,255,255,.6);border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;background:rgba(0,0,0,.25);transition:.2s}
+.slot{width:74px;height:98px;border:3px dashed rgba(255,255,255,.6);border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;background:rgba(0,0,0,.25);transition:.2s}
 .slot:hover{background:rgba(255,255,255,.2)}
 .slot.cn{border-color:#ffe14d}.slot.sl{box-shadow:0 0 20px 6px #4dd2ff;border-color:#4dd2ff}
 .slot.drag-over{background:rgba(77,210,255,.35);border-color:#4dd2ff;transform:scale(1.06)}
 .slot i{position:absolute;right:-8px;top:-10px;background:#ff3d71;border-radius:99px;font-size:12px;padding:2px 7px;font-style:normal;font-weight:900}
 .slot em{opacity:.6;font-style:normal;font-size:32px}
 .ctrd{text-align:center;font-size:14px;font-weight:700}.ctrd button{padding:8px 12px;font-size:13px;margin-top:6px}
-.sui{font-size:44px;background:#fff;border-radius:50%;width:68px;height:68px;display:flex;align-items:center;justify-content:center;color:#111;animation:bob 2s infinite;box-shadow:0 4px 16px rgba(0,0,0,.3);border:3px solid #111}
+.sui{font-size:32px;background:#fff;border-radius:50%;width:68px;height:68px;display:flex;align-items:center;justify-content:center;color:#111;animation:bob 2s infinite;box-shadow:0 4px 16px rgba(0,0,0,.3);border:3px solid #111}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;animation:up .4s}
 .ov h1{font-size:clamp(30px,7vw,52px)}
 #m .md{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:90;display:flex;align-items:center;justify-content:center;padding:16px}
@@ -130,15 +132,22 @@ const snd = {
   }
 };
 
-const L="A23456789TJQK", SU="♣♦♠♥", su=c=>c/13|0, red=c=>su(c)&1, srt=(a,b)=>a-b, hv=c=>c%13||13,
+const L="A23456789TJQK", 
+svgs = [
+  '<svg viewBox="0 0 24 24" fill="#111"><path d="M12 2C9 2 7 4 7 7c0 2 1.5 3.5 3 4.5C8.5 13 7 14.5 7 17c0 2.5 2 4.5 5 4.5s5-2 5-4.5c0-2.5-1.5-4-3-5.5 1.5-1 3-2.5 3-4.5 0-3-2-5-5-5z"/></svg>', // Clubs
+  '<svg viewBox="0 0 24 24" fill="#e11d48"><path d="M12 2L2 12l10 10 10-10L12 2z"/></svg>', // Diamonds
+  '<svg viewBox="0 0 24 24" fill="#111"><path d="M12 2C8 2 5 5 5 9c0 3 2 5.5 5 6.5L9 22h6l-1-6.5c3-1 5-3.5 5-6.5 0-4-3-7-7-7z"/></svg>', // Spades
+  '<svg viewBox="0 0 24 24" fill="#e11d48"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' // Hearts
+];
+const su=c=>c/13|0, red=c=>su(c)&1, srt=(a,b)=>a-b, hv=c=>c%13||13,
 sh=a=>{for(let i=a.length;i--;){let j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a},
 deck=()=>sh([...Array(52).keys()]),
 cd=(c,x='',a)=>{
   if(typeof c==='object'&&c.u){
     const colMap={r:'u-r',y:'u-y',g:'u-g',b:'u-b',w:'u-w'};
-    return `<div class="cd ${colMap[c.c]||'u-w'} ${x}" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'card:${JSON.stringify(c)}')" ${a}>${c.v}<b>${c.c=='w'?'🌈':'⚡'}</b></div>`;
+    return `<div class="cd ${colMap[c.c]||'u-w'} ${x}" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'card:${encodeURIComponent(JSON.stringify(c))}')" onclick="handleCardClick(${encodeURIComponent(JSON.stringify(c))})" ${a}>${c.v}<b>${c.c=='w'?'🌈':'⚡'}</b></div>`;
   }
-  return `<div class="cd ${red(c)?'r':''} ${x}" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'card:${c}')" ${a}>${L[c%13].replace('T',10)}<b>${SU[su(c)]}</b></div>`;
+  return `<div class="cd ${red(c)?'r':''} ${x}" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'card:${c}')" onclick="handleCardClick(${c})" ${a}>${L[c%13].replace('T',10)}${svgs[su(c)]}</div>`;
 },
 bk=n=>`<span class="bks">${'<div class="cd bk sm"></div>'.repeat(Math.min(n,13))}</span>`,
 $=id=>document.getElementById(id);
@@ -193,11 +202,11 @@ function evalPokerHand(cards) {
 
 // --- GAMES DEFINITION ---
 const G={
-uno:{n:4,maxN:4,name:'UNO',ico:'🔴',col:'#ff3d71',p:'2–4 players',d:'Match color or action. Play Skip, Reverse, Draw 2 & Wild +4!',
+uno:{n:4,maxN:4,name:'UNO',ico:`<svg viewBox="0 0 24 24" fill="#ff3d71"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>`,col:'#ff3d71',p:'2–4 players',d:'Match color or action. Play Skip, Reverse, Draw 2 & Wild +4!',
 rules:[
   '<strong>Goal:</strong> Be the first player to shed all cards in your hand.',
-  '<strong>Matching:</strong> Play a card matching either the current color, number, or symbol on top of the pile.',
-  '<strong>Action Cards:</strong> 🚫 Skip (skips next turn), 🔄 Reverse (reverses play direction), +2 Draw Two.',
+  '<strong>Matching:</strong> Tap or drag any card matching either the current color, number, or symbol on top of the discard pile.',
+  '<strong>Action Cards:</strong> 🚫 Skip, 🔄 Reverse, +2 Draw Two.',
   '<strong>Wild Cards:</strong> 🌈 Wild lets you pick a new active color. 🌈+4 Wild Draw Four forces next player to draw 4 and skips them!',
   '<strong>Drawing:</strong> Tap the Draw Pile if you have no valid cards to play.'
 ],
@@ -245,12 +254,12 @@ apply(S,p,m){
     if(m.c.v=='+4') {
       let nextP = (S.turn + S.dir + n) % n;
       for(let i=0;i<4;i++) S.h[nextP].push(S.dk.shift()||createUnoDeck()[0]);
-      S.turn = (S.turn + S.dir) % n;
+      S.turn = (S.turn + S.dir + n) % n;
     }
     return;
   }
   S.curClr = m.c.c;
-  if(m.c.v=='🚫') S.turn = (S.turn + S.dir) % n;
+  if(m.c.v=='🚫') S.turn = (S.turn + S.dir + n) % n;
   else if(m.c.v=='🔄') S.dir *= -1;
   else if(m.c.v=='+2') {
     let nextP = (S.turn + S.dir + n) % n;
@@ -287,7 +296,7 @@ ${S.pendingClr && S.turn==myi() ? `<div class="ctr"><p>Choose Wild Color:</p><di
 </div></div>` : ''}`,
 hint:(S,my,mi)=>my&&!G.uno.legal(S,mi).length?'· No matching card: tap the draw pile':''},
 
-poker:{n:4,maxN:4,name:'Texas Hold\'em',ico:'♠️',col:'#22c55e',p:'2–4 players',d:'Bet, Raise, or Bluff! Standard Texas Hold\'em rules with pot calculation.',
+poker:{n:4,maxN:4,name:'Texas Hold\'em',ico:`<svg viewBox="0 0 24 24" fill="#22c55e"><path d="M12 2C8 2 5 5 5 9c0 3 2 5.5 5 6.5L9 22h6l-1-6.5c3-1 5-3.5 5-6.5 0-4-3-7-7-7z"/></svg>`,col:'#22c55e',p:'2–4 players',d:'Bet, Raise, or Bluff! Standard Texas Hold\'em rules with pot calculation.',
 rules:[
   '<strong>Goal:</strong> Form the best 5-card poker hand using your 2 hole cards and 5 community cards.',
   '<strong>Rounds:</strong> Pre-flop, Flop (3 cards), Turn (1 card), River (1 card).',
@@ -352,11 +361,11 @@ ui:S=>`<div class="ctr" style="padding:16px">
 </div>`,
 hint:S=>`· Stage: ${S.stage.toUpperCase()}`},
 
-bj:{n:2,maxN:2,name:'Blackjack',ico:'🎰',col:'#ffe14d',p:'1-2 players vs Dealer',d:'Beat the Dealer\'s hand without busting over 21!',
+bj:{n:2,maxN:2,name:'Blackjack',ico:`<svg viewBox="0 0 24 24" fill="#ffe14d"><path d="M12 2L2 19h20L12 2z"/></svg>`,col:'#ffe14d',p:'1-2 players vs Dealer',d:'Beat the Dealer\'s hand without busting over 21!',
 rules:[
   '<strong>Goal:</strong> Get a card value closer to 21 than the dealer without going over 21.',
-  '<strong>Card Values:</strong> Face cards (K, Q, J) = 10, Aces = 1 or 11, Number cards = face value.',
-  '<strong>Actions:</strong> **Hit** (take another card), **Stand** (keep hand), **Double Down** (double bet for 1 card).',
+  '<strong>Card Values:</strong> Face cards = 10, Aces = 1 or 11, Number cards = face value.',
+  '<strong>Actions:</strong> **Hit** (take another card), **Stand** (keep hand).',
   '<strong>Dealer Rules:</strong> Dealer must draw cards until their total reaches at least 17.'
 ],
 init(S){
@@ -399,14 +408,12 @@ ui:S=>`<div class="ctr">
 </div>`,
 hint:(S,my,mi)=>`· Hand Value: ${S.h[mi].reduce((s,c)=>s+Math.min(c%13+1,10),0)}`},
 
-hearts:{n:4,maxN:4,name:'Hearts',ico:'♥️',col:'#ff3d71',p:'2–4 players',d:'Dodge hearts and the Queen of Spades. Lowest score wins!',
+hearts:{n:4,maxN:4,name:'Hearts',ico:`<svg viewBox="0 0 24 24" fill="#ff3d71"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,col:'#ff3d71',p:'2–4 players',d:'Dodge hearts and the Queen of Spades. Lowest score wins!',
 rules:[
-  '<strong>Goal:</strong> Avoid taking penalty cards (Hearts and the Queen of Spades). Lowest score at the end wins!',
-  '<strong>Leading:</strong> The player holding the 2♣ must lead it for the first trick.',
-  '<strong>Following Suit:</strong> You must follow the led suit if you have it. If out of that suit, you may discard any card (including penalty cards!).',
-  '<strong>Winning Tricks:</strong> The highest card of the led suit wins the trick and takes all penalty points inside it.',
-  '<strong>Scoring:</strong> Each Heart = 1 point. The Queen of Spades (♠Q) = 13 points.',
-  '<strong>Shoot the Moon:</strong> Capture ALL penalty cards to give everyone else 26 points!'
+  '<strong>Goal:</strong> Avoid taking penalty cards (Hearts and Queen of Spades). Lowest score wins!',
+  '<strong>Leading:</strong> Player holding 2♣ leads first trick.',
+  '<strong>Following Suit:</strong> Must follow led suit if possible.',
+  '<strong>Scoring:</strong> Each Heart = 1 pt, Queen of Spades = 13 pts.'
 ],
 init(S){let d=deck(), cpr=Math.floor(52/S.seats.length);S.h=S.seats.map((_,i)=>d.slice(i*cpr,(i+1)*cpr).sort(srt));S.tr=[];S.lt=[];S.pt=S.seats.map(()=>0);S.hb=0;S.first=1;let starter=S.h.findIndex(h=>h.includes(1));S.turn=starter>=0?starter:0},
 legal(S,p){let h=S.h[p],t=S.tr;if(t.length){let f=h.filter(c=>su(c)==su(t[0].c));return f.length?f:h}if(S.first&&h.includes(1))return[1];let n=h.filter(c=>su(c)!=3);return S.hb||!n.length?h:n},
@@ -422,13 +429,12 @@ if(t.length&&!l.some(c=>su(c)==su(t[0].c)))return{c:l.includes(37)?37:l.sort((a,
 ui:S=>`<div class="trick" ondragover="event.preventDefault()" ondrop="event.preventDefault();let data=event.dataTransfer.getData('text/plain');if(data.startsWith('card:'))P(parseInt(data.split('card:')[1]))">${S.tr.map(t=>`<div>${cd(t.c,'pop')}<small>${S.seats[t.p].name}</small></div>`).join('')||'<span style="opacity:.8">Last trick: '+(S.lt.map(t=>SU[su(t.c)]+L[t.c%13]).join(' ')||'—')+'</span>'}</div>`,
 hint:S=>`· Scores: ${S.seats.map((s,i)=>s.name+': '+S.pt[i]).join(' | ')} ${S.hb?'· ♥ broken':''}`},
 
-kic:{n:4,maxN:4,name:'Kings in Corner',ico:'👑',col:'#a855f7',p:'2–4 players',d:'Build alternating-color piles. Drag cards or whole piles freely!',
+kic:{n:4,maxN:4,name:'Kings in Corner',ico:`<svg viewBox="0 0 24 24" fill="#a855f7"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/></svg>`,col:'#a855f7',p:'2–4 players',d:'Build alternating-color piles. Drag cards or whole piles freely!',
 rules:[
   '<strong>Goal:</strong> Empty your hand completely by playing cards onto the 8 board piles.',
-  '<strong>Building Piles:</strong> Cards must be built in **alternating colors** (red on black, black on red) and **descending rank** (e.g., Red 6 on Black 7).',
-  '<strong>Dragging Piles:</strong> Drag an entire column stack onto another column stack to combine them!',
-  '<strong>Empty Columns:</strong> Emptying a column leaves an open space where **any card** from your hand can be played.',
-  '<strong>Corner Spaces (♚):</strong> Reserved exclusively for Kings!'
+  '<strong>Building Piles:</strong> Cards must be built in **alternating colors** and **descending rank** (Red 6 on Black 7).',
+  '<strong>Dragging Piles:</strong> Drag entire column stacks onto other columns to combine them!',
+  '<strong>Empty Columns:</strong> Emptying a column leaves an open space where **any card** can be placed.'
 ],
 init(S){let d=deck();S.h=S.seats.map(()=>d.splice(0,7).sort(srt));S.pl=[[],[],[],[],[],[],[],[]];[0,1,2,3].forEach(i=>S.pl[i].push(d.shift()));S.dk=d;S.turn=0;S.viewPile=-1;G.kic.draw(S)},
 draw(S){if(S.dk.length)S.h[S.turn].push(S.dk.shift());S.h[S.turn].sort(srt)},
@@ -460,7 +466,7 @@ ui:S=>`<div class="kg">${[0,4,1,5,-1,6,2,7,3].map(i=>i<0?`<div class="ctrd">📚
 (S.viewPile>=0 && S.pl[S.viewPile] && S.pl[S.viewPile].length ? `<div style="text-align:center;margin-top:10px;font-size:13px;opacity:.9">Cards in pile #${S.viewPile+1}:</div><div class="pile-preview">${S.pl[S.viewPile].map(c=>cd(c,'sm')).join('')}</div>` : ''),
 hint:()=>'· Drag cards/piles or tap to combine & play'},
 
-gin:{n:2,maxN:2,name:'Gin Rummy',ico:'🃏',col:'#22d3a0',p:'2 players',d:'Make sets and runs, then knock with low deadwood.',
+gin:{n:2,maxN:2,name:'Gin Rummy',ico:`<svg viewBox="0 0 24 24" fill="#22d3a0"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>`,col:'#22d3a0',p:'2 players',d:'Make sets and runs, then knock with low deadwood.',
 rules:[
   '<strong>Goal:</strong> Form your 10 cards into **Sets** (3 or 4 of a kind) and **Runs** (3+ consecutive cards of same suit).',
   '<strong>Deadwood:</strong> Unmatched cards in your hand = Deadwood points.',
@@ -555,7 +561,7 @@ const menu=()=>`<h1>CARD<span>QUEST</span></h1><p class="sub">⚡ Blooket-Style 
 
 function botDifficulty(val){ botDiff = val; }
 
-function guide(k){let g=G[k];snd.play('click');$('m').innerHTML=`<div class="md" onclick="if(event.target==this)$('m').innerHTML=''"><div class="c2"><h2>${g.ico} How to play ${g.name}</h2><ul>${g.rules.map(r=>`<li>${r}</li>`).join('')}</ul><button class="b" onclick="$('m').innerHTML='';snd.play('click')">Got it!</button></div></div>`}
+function guide(k){let g=G[k];snd.play('click');$('m').innerHTML=`<div class="md" onclick="if(event.target==this)$('m').innerHTML=''"><div class="c2"><h2>${g.name} - How to Play</h2><ul>${g.rules.map(r=>`<li>${r}</li>`).join('')}</ul><button class="b" onclick="$('m').innerHTML='';snd.play('click')">Got it!</button></div></div>`}
 
 function fill(){
   if(!autofillBots) return;
@@ -647,6 +653,18 @@ function tick(){
 function mv(mi,m){kn=0; sendAction(m); render()}
 const myi=()=>S.seats.findIndex(s=>s.id==me);
 
+function handleCardClick(c){
+  let mi=myi(), g=G[S.g];
+  if(S.turn!=mi || S.over) return;
+  if(typeof c === 'string' && c.startsWith('card:')) c = JSON.parse(c.split('card:')[1]);
+  if(g.can(S,mi,c)) {
+    let m = g.pick(S,c);
+    if(m) mv(mi,m);
+  } else {
+    snd.play('click');
+  }
+}
+
 function P(c){
   let mi=myi(), g=G[S.g];
   if(S.turn!=mi || S.over || !g.can(S,mi,c)) return;
@@ -661,7 +679,7 @@ function Q(k){
 }
 
 function view(){
-  let g=G[S.g], mi=myi(), top=`<div class="top"><b>${g.ico} ${g.name}</b><span class="code">ROOM ${code}</span><span><button class="b3" onclick="guide('${S.g}')">📖</button> <button class="b3" onclick="leaveRoom()">✖</button></span></div>`;
+  let g=G[S.g], mi=myi(), top=`<div class="top"><b>${g.name}</b><span class="code">ROOM ${code}</span><span><button class="b3" onclick="guide('${S.g}')">📖</button> <button class="b3" onclick="leaveRoom()">✖</button></span></div>`;
   
   if(S.phase=='lobby') {
     return top+`<div class="ctr">
@@ -694,7 +712,7 @@ function view(){
     ${g.ui(S)}
   </div>
   <div class="msg">${S.over?'':my?'✨ Your turn! ':S.seats[S.turn].name+' is thinking… '}${g.hint(S,my,mi)}</div>
-  <div class="hand-wrap"><div class="hand">${S.h[mi].map(c=>cd(c,(my&&g.can(S,mi,c)?'ok':my?'':'dim')+(sel&&sel.c==c?' up':''),`onclick="P(${JSON.stringify(c)})"`)).join('')}</div></div>
+  <div class="hand-wrap"><div class="hand">${S.h[mi].map(c=>cd(c,(my&&g.can(S,mi,c)?'ok':my?'':'dim')+(sel&&sel.c==c?' up':'')).replace('onclick="', 'onclick="handleCardClick('+(typeof c==='object'?JSON.stringify(c):c)+');')).join('')}</div></div>
   ${S.over?`<div class="ov"><h1>${S.over.t}</h1>${host?'<button class="b" onclick="playAgain()">↻ Play Again</button>':'<p>Waiting for host…</p>'}<button class="b3" onclick="leaveRoom()">Main Menu</button></div>`:''}`;
 }
 
@@ -707,11 +725,11 @@ function render(){
 
 function confetti(){
   let c=$('cv'), x=c.getContext('2d'); c.width=innerWidth; c.height=innerHeight;
-  let p=[...Array(180)].map(_=>({x:innerWidth/2, y:innerHeight/2, vx:(Math.random()-.5)*22, vy:Math.random()*-18-4, c:`hsl(${Math.random()*360},95%,60%)`, s:Math.random()*9+4})), f=0;
-  (function l(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.x+=q.vx;q.y+=q.vy;q.vy+=.35;x.fillStyle=q.c;x.fillRect(q.x,q.y,q.s,q.s)});if(f++<170)requestAnimationFrame(l);else x.clearRect(0,0,c.width,c.height);})();
+  let p=[...Array(200)].map(_=>({x:innerWidth/2, y:innerHeight/2, vx:(Math.random()-.5)*26, vy:Math.random()*-20-4, c:`hsl(${Math.random()*360},95%,60%)`, s:Math.random()*10+5, r:Math.random()*360, vr:(Math.random()-.5)*15})), f=0;
+  (function l(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.x+=q.vx;q.y+=q.vy;q.vy+=.4;q.r+=q.vr;x.save();x.translate(q.x,q.y);x.rotate(q.r*Math.PI/180);x.fillStyle=q.c;x.fillRect(-q.s/2,-q.s/2,q.s,q.s*0.6);x.restore()});if(f++<180)requestAnimationFrame(l);else x.clearRect(0,0,c.width,c.height);})();
 }
 
-document.body.insertAdjacentHTML('beforeend',[...Array(18)].map((_,i)=>`<span class="f" style="left:${i*5.6}%;animation-duration:${9+i%7*3}s;animation-delay:-${i*2}s;font-size:${24+i%5*12}px">${SU[i%4]}</span>`).join(''));
+document.body.insertAdjacentHTML('beforeend',[...Array(18)].map((_,i)=>`<span class="f" style="left:${i*5.6}%;animation-duration:${9+i%7*3}s;animation-delay:-${i*2}s;font-size:${24+i%5*12}px">♠</span>`).join(''));
 render();
 </script>
 </body>
