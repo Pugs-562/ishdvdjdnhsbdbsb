@@ -33,7 +33,7 @@ input:focus{border-color:#ffe14d;box-shadow:0 0 16px rgba(255,225,77,.4)}
 button{font:800 15px system-ui;border:0;border-radius:14px;padding:12px 18px;cursor:pointer;color:#fff;transition:.15s;box-shadow:0 4px 14px rgba(0,0,0,.3)}
 button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transform:scale(.95)}
 .b{background:linear-gradient(135deg,#ff3d71,#ff9a3d)}.b2{background:linear-gradient(135deg,#00b3ff,#7a5cff)}.b3{background:rgba(255,255,255,.25)}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;background:rgba(0,0,0,.25);padding:10px 16px;border-radius:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;background:rgba(0,0,0,.25);padding:10px 16px;border-radius:16px;flex-wrap:wrap}
 .code{background:#ffe14d;color:#111;padding:6px 14px;border-radius:99px;font-size:18px;font-weight:900;letter-spacing:1px}
 .ctr{text-align:center;padding:40px 16px;background:rgba(0,0,0,.2);border-radius:28px;margin-top:10px}
 .big{font-size:64px;letter-spacing:12px;text-shadow:0 0 24px #ffe14d;margin:10px 0}
@@ -74,10 +74,12 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 <div id="a"></div><div id="m"></div><canvas id="cv"></canvas>
 <script>
 // --- AUDIO SYNTHESIZER ---
+let soundEnabled = true;
 const snd = {
   ctx: null,
   init() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
   play(type) {
+    if(!soundEnabled) return;
     try {
       this.init();
       let c = this.ctx, o = c.createOscillator(), g = c.createGain();
@@ -171,14 +173,44 @@ ui:S=>`<div class="row"><div onclick="Q('s')" style="cursor:pointer;text-align:c
 hint:(S,my,mi)=>`· ${my?(S.ph?'Discard a card':'Draw: stock or discard'):''} · Deadwood ${dw(S.h[mi])}`}
 };
 
-// --- MULTIPLAYER & ROOM ENGINE ---
-let bcChannel = null;
+// --- MULTIPLAYER & ROOM ENGINE (P2P VIA PEERJS) ---
 let peer = null, connObj = null, connections = {};
 
-function initNet() {
-  if(bcChannel) return;
-  bcChannel = new BroadcastChannel('cardquest_room_chan');
-  bcChannel.onmessage = e => handleNetMessage(e.data);
+function initPeerHost(code, cb) {
+  if(peer) peer.destroy();
+  peer = new Peer('cq-game-2026-' + code, { host: '0.peerjs.com', port: 443, secure: true });
+  peer.on('open', () => { if(cb) cb(true); });
+  peer.on('connection', c => {
+    connections[c.peer] = c;
+    c.on('data', data => handleNetMessage(data));
+    c.on('close', () => delete connections[c.peer]);
+  });
+  peer.on('error', err => {
+    console.error('Peer host error:', err);
+    if(err.type === 'unavailable-id') {
+      alert('Room ID collision. Please try hosting again.');
+      leaveRoom();
+    }
+  });
+}
+
+function initPeerGuest(code, onConnected) {
+  if(peer) peer.destroy();
+  peer = new Peer(undefined, { host: '0.peerjs.com', port: 443, secure: true });
+  peer.on('open', () => {
+    connObj = peer.connect('cq-game-2026-' + code, { reliable: true });
+    if(connObj) {
+      connObj.on('open', () => {
+        if(onConnected) onConnected();
+      });
+      connObj.on('data', data => handleNetMessage(data));
+      connObj.on('error', err => { alert('Connection error: ' + err); });
+    }
+  });
+  peer.on('error', err => {
+    alert('Could not connect to room. Check your room code.');
+    leaveRoom();
+  });
 }
 
 function handleNetMessage(m) {
@@ -202,7 +234,6 @@ function handleNetMessage(m) {
 function broadcastState() {
   if(!host) return;
   let msg = {code, t:'S', S};
-  if(bcChannel) bcChannel.postMessage(msg);
   Object.values(connections).forEach(c => { try{ c.send(msg); }catch(e){} });
 }
 
@@ -211,14 +242,20 @@ function sendAction(m) {
   if(host) {
     handleNetMessage(msg);
   } else {
-    if(bcChannel) bcChannel.postMessage(msg);
     if(connObj && connObj.open) connObj.send(msg);
   }
 }
 
 // --- APP CONTROLS ---
-const menu=()=>`<h1>CARD<span>QUEST</span></h1><p class="sub">⚡ Blooket-Style Multiplayer Card Arcade ⚡</p>
-<div class="bar"><input placeholder="Your name" value="${nm}" oninput="nm=this.value"><input id="cd" maxlength="4" placeholder="ROOM CODE" style="text-transform:uppercase"><button class="b2" onclick="joinRoom()">🔑 Join Room</button></div>
+const menu=()=>`<h1>CARD<span>QUEST</span></h1><p class="sub">⚡ Cross-Play Multiplayer Card Arcade ⚡</p>
+<div class="bar">
+  <input placeholder="Your name" value="${nm}" oninput="nm=this.value">
+  <input id="cd" maxlength="4" placeholder="ROOM CODE" style="text-transform:uppercase">
+  <button class="b2" onclick="joinRoom()">🔑 Join Room</button>
+</div>
+<div style="text-align:center;margin-bottom:16px">
+  <button class="b3" onclick="soundEnabled=!soundEnabled;this.textContent=soundEnabled?'🔊 Sound: ON':'🔇 Sound: OFF';snd.play('click')">🔊 Sound: ON</button>
+</div>
 <div class="grid">${Object.entries(G).map(([k,g],i)=>`<div class="tile" style="--c:${g.col};animation-delay:${i*.1}s"><i>${g.ico}</i><h3>${g.name}</h3><p>${g.d}</p><small>${g.p}</small><div><button class="b" onclick="playBots('${k}')">🤖 Play Bots</button><button class="b2" onclick="hostRoom('${k}')">🌐 Host Room</button><button class="b3" onclick="guide('${k}')">📖 Guide</button></div></div>`).join('')}</div>`;
 
 function guide(k){let g=G[k];snd.play('click');$('m').innerHTML=`<div class="md" onclick="if(event.target==this)$('m').innerHTML=''"><div class="c2"><h2>${g.ico} How to play ${g.name}</h2><ul>${g.rules.map(r=>`<li>${r}</li>`).join('')}</ul><button class="b" onclick="$('m').innerHTML='';snd.play('click')">Got it!</button></div></div>`}
@@ -233,51 +270,31 @@ function playBots(k){
 async function hostRoom(k){
   snd.play('click');
   code=[...Array(4)].map(_=>'ABCDEFGHJKLMNPQRSTUVWXYZ'[Math.random()*24|0]).join('');
-  host=1; initNet();
+  host=1; 
   S={g:k,phase:'lobby',v:0,seats:[{name:nm||'Host',id:me}]};
-  
-  // Setup PeerJS host
-  try {
-    if(peer) peer.destroy();
-    peer = new Peer('cq-' + code);
-    peer.on('connection', c => {
-      connections[c.peer] = c;
-      c.on('data', data => handleNetMessage(data));
-      c.on('close', () => delete connections[c.peer]);
-    });
-  } catch(e){}
   render();
+  initPeerHost(code, () => {
+    render();
+  });
 }
 
 async function joinRoom(){
   let c=$('cd').value.toUpperCase().trim();
   if(c.length<4)return alert('Enter a valid 4-letter room code');
   snd.play('click');
-  code=c; host=0; initNet(); S=null;
-  
-  // Setup PeerJS guest
-  try {
-    if(peer) peer.destroy();
-    peer = new Peer();
-    peer.on('open', () => {
-      connObj = peer.connect('cq-' + code);
-      if(connObj) {
-        connObj.on('open', () => {
-          connObj.send({code, t:'join', id:me, name:nm||'Guest'});
-        });
-        connObj.on('data', data => handleNetMessage(data));
-      }
-    });
-  } catch(e){}
+  code=c; host=0; S=null;
+  render();
+
+  initPeerGuest(code, () => {
+    connObj.send({code, t:'join', id:me, name:nm||'Guest'});
+  });
 
   clearInterval(iv);
   iv=setInterval(()=>{
     if(!S || !S.seats.some(s=>s.id==me)) {
-      if(bcChannel) bcChannel.postMessage({code, t:'join', id:me, name:nm||'Guest'});
       if(connObj && connObj.open) connObj.send({code, t:'join', id:me, name:nm||'Guest'});
     }
   }, 1500);
-  render();
 }
 
 function startGame(){
@@ -293,9 +310,9 @@ function playAgain(){
 function leaveRoom(){
   snd.play('click');
   clearTimeout(T); clearInterval(iv);
-  try{ if(peer) peer.destroy(); if(bcChannel) bcChannel.close(); }catch(e){}
-  bcChannel=null; peer=null; connObj=null; connections={};
-  R=null; S=null; host=1; sel=0; render();
+  try{ if(peer) peer.destroy(); }catch(e){}
+  peer=null; connObj=null; connections={};
+  R=null; S=null; host=1; sel=0; code=''; render();
 }
 
 function doMove(p,m){
