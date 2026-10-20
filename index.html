@@ -49,29 +49,29 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 .trick{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.trick div{text-align:center}.trick small{display:block;margin-top:4px;font-weight:700}
 .msg{text-align:center;min-height:28px;margin:10px;font-size:18px;text-shadow:0 2px 6px #0008}
 
-/* SHUFFLER DEALER ANIMATION */
+/* DEALER ANIMATION */
 .shuffler{position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#ffe14d;color:#111;padding:4px 16px;border-radius:99px;font-weight:900;font-size:12px;box-shadow:0 4px 12px #0008;z-index:20;display:flex;align-items:center;gap:6px}
 .shuffler-arm{width:12px;height:12px;background:#ff3d71;border-radius:50%;display:inline-block;animation:pulse .8s infinite alternate}
 @keyframes pulse{to{transform:scale(1.4)}}
 
 /* CARTOONY CARDS */
-.cd{width:62px;height:90px;border-radius:12px;background:#fff;color:#111;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:19px;font-weight:900;box-shadow:0 6px 0 #bbb,0 10px 18px rgba(0,0,0,.4);transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s;animation:deal .35s both;user-select:none;flex:none;cursor:pointer;border:3px solid #111;position:relative}
-.cd:hover{transform:translateY(-8px) scale(1.05)}
-.cd svg{width:26px;height:26px;margin-top:2px}
-.cd b{font-size:24px;line-height:1}
+.cd{width:60px;height:86px;border-radius:12px;background:#fff;color:#111;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:18px;font-weight:900;box-shadow:0 5px 0 #bbb,0 8px 16px rgba(0,0,0,.4);transition:transform .2s cubic-bezier(.175,.885,.32,1.275),box-shadow .2s;animation:deal .35s both;user-select:none;flex:none;cursor:pointer;border:3px solid #111;position:relative}
+.cd:hover{transform:translateY(-6px) scale(1.05)}
+.cd svg{width:24px;height:24px;margin-top:2px}
+.cd b{font-size:22px;line-height:1}
 .cd.r{color:#e11d48}
 /* UNO CARDS */
 .cd.u-r{background:#ff3d71;color:#fff;border-color:#fff}.cd.u-y{background:#ffe14d;color:#111;border-color:#fff}.cd.u-g{background:#22c55e;color:#fff;border-color:#fff}.cd.u-b{background:#00b3ff;color:#fff;border-color:#fff}.cd.u-w{background:linear-gradient(135deg,#ff3d71,#ffe14d,#22c55e,#00b3ff);color:#fff;border-color:#fff}
 @keyframes deal{from{transform:translateY(-30px) scale(.7) rotate(-10deg);opacity:.1}}
 .cd.pop{animation:pop .4s both}@keyframes pop{from{transform:scale(1.8) rotate(20deg);opacity:0}}
 .cd.bk{background:repeating-linear-gradient(45deg,#6d28d9,#6d28d9 8px,#a855f7 8px,#a855f7 16px);color:transparent;border:3px solid #fff}
-.sm{width:40px;height:58px;font-size:13px;border-width:2px;box-shadow:0 3px 0 #999,0 6px 10px rgba(0,0,0,.3)}.sm svg{width:16px;height:16px}.sm b{font-size:16px}
+.sm{width:38px;height:54px;font-size:12px;border-width:2px;box-shadow:0 3px 0 #999,0 5px 8px rgba(0,0,0,.3)}.sm svg{width:14px;height:14px}.sm b{font-size:15px}
 
 .hand-wrap{position:relative;width:100%;padding:10px 0}
 .hand{display:flex;justify-content:flex-start;padding:24px 36px 14px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
-.hand .cd{margin-left:-20px}.hand .cd:first-child{margin-left:0}
-.cd.ok{box-shadow:0 0 18px 6px #ffe14d,0 6px 0 #bbb;transform:translateY(-6px)}
-.cd.ok:hover,.cd.up{transform:translateY(-26px) scale(1.1) rotate(2deg);z-index:20}
+.hand .cd{margin-left:-18px}.hand .cd:first-child{margin-left:0}
+.cd.ok{box-shadow:0 0 16px 5px #ffe14d,0 5px 0 #bbb;transform:translateY(-6px)}
+.cd.ok:hover,.cd.up{transform:translateY(-24px) scale(1.1) rotate(2deg);z-index:20}
 .cd.dim{filter:brightness(.6);opacity:.75}
 
 /* TURN BANNER */
@@ -79,14 +79,15 @@ button:hover{transform:scale(1.05);filter:brightness(1.15)}button:active{transfo
 #turn-banner.show{transform:translate(-50%,-50%) scale(1);opacity:1;animation:pulseTurn .8s ease-in-out infinite alternate}
 @keyframes pulseTurn{to{box-shadow:0 0 80px #4dd2ff;transform:translate(-50%,-50%) scale(1.08)}}
 
-.kg{display:grid;grid-template-columns:repeat(3,76px);gap:12px;justify-items:center}
-.slot{width:74px;height:98px;border:3px dashed rgba(255,255,255,.6);border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;background:rgba(0,0,0,.25);transition:.2s}
+/* KINGS IN THE CORNER 3x3 GRID */
+.kg{display:grid;grid-template-columns:repeat(3,76px);gap:10px;justify-items:center}
+.slot{width:72px;height:96px;border:3px dashed rgba(255,255,255,.6);border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;background:rgba(0,0,0,.25);transition:.2s}
 .slot:hover{background:rgba(255,255,255,.2)}
-.slot.cn{border-color:#ffe14d}.slot.sl{box-shadow:0 0 20px 6px #4dd2ff;border-color:#4dd2ff}
-.slot.drag-over{background:rgba(77,210,255,.35);border-color:#4dd2ff;transform:scale(1.06)}
-.slot i{position:absolute;right:-8px;top:-10px;background:#ff3d71;border-radius:99px;font-size:12px;padding:2px 7px;font-style:normal;font-weight:900}
-.slot em{opacity:.6;font-style:normal;font-size:32px}
-.ctrd{text-align:center;font-size:14px;font-weight:700}.ctrd button{padding:8px 12px;font-size:13px;margin-top:6px}
+.slot.cn{border-color:#ffe14d;background:rgba(255,225,77,.12)}
+.slot.sl{box-shadow:0 0 20px 6px #4dd2ff;border-color:#4dd2ff;background:rgba(77,210,255,.25)}
+.slot i{position:absolute;right:-6px;top:-8px;background:#ff3d71;border-radius:99px;font-size:11px;padding:2px 6px;font-style:normal;font-weight:900;box-shadow:0 2px 6px #0008}
+.slot em{opacity:.6;font-style:normal;font-size:30px}
+.ctrd{text-align:center;font-size:13px;font-weight:700}.ctrd button{padding:8px 12px;font-size:12px;margin-top:4px}
 .sui{font-size:32px;background:#fff;border-radius:50%;width:68px;height:68px;display:flex;align-items:center;justify-content:center;color:#111;animation:bob 2s infinite;box-shadow:0 4px 16px rgba(0,0,0,.3);border:3px solid #111}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;animation:up .4s}
 .ov h1{font-size:clamp(30px,7vw,52px)}
@@ -134,10 +135,10 @@ const snd = {
 
 const L="A23456789TJQK", 
 svgs = [
-  '<svg viewBox="0 0 24 24" fill="#111"><path d="M12 2C9 2 7 4 7 7c0 2 1.5 3.5 3 4.5C8.5 13 7 14.5 7 17c0 2.5 2 4.5 5 4.5s5-2 5-4.5c0-2.5-1.5-4-3-5.5 1.5-1 3-2.5 3-4.5 0-3-2-5-5-5z"/></svg>', // Clubs
-  '<svg viewBox="0 0 24 24" fill="#e11d48"><path d="M12 2L2 12l10 10 10-10L12 2z"/></svg>', // Diamonds
-  '<svg viewBox="0 0 24 24" fill="#111"><path d="M12 2C8 2 5 5 5 9c0 3 2 5.5 5 6.5L9 22h6l-1-6.5c3-1 5-3.5 5-6.5 0-4-3-7-7-7z"/></svg>', // Spades
-  '<svg viewBox="0 0 24 24" fill="#e11d48"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' // Hearts
+  '<svg viewBox="0 0 24 24" fill="#111"><path d="M12 2C9 2 7 4 7 7c0 2 1.5 3.5 3 4.5C8.5 13 7 14.5 7 17c0 2.5 2 4.5 5 4.5s5-2 5-4.5c0-2.5-1.5-4-3-5.5 1.5-1 3-2.5 3-4.5 0-3-2-5-5-5z"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="#e11d48"><path d="M12 2L2 12l10 10 10-10L12 2z"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="#111"><path d="M12 2C8 2 5 5 5 9c0 3 2 5.5 5 6.5L9 22h6l-1-6.5c3-1 5-3.5 5-6.5 0-4-3-7-7-7z"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="#e11d48"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'
 ];
 const su=c=>c/13|0, red=c=>su(c)&1, srt=(a,b)=>a-b, hv=c=>c%13||13,
 sh=a=>{for(let i=a.length;i--;){let j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a},
@@ -145,9 +146,9 @@ deck=()=>sh([...Array(52).keys()]),
 cd=(c,x='',a)=>{
   if(typeof c==='object'&&c.u){
     const colMap={r:'u-r',y:'u-y',g:'u-g',b:'u-b',w:'u-w'};
-    return `<div class="cd ${colMap[c.c]||'u-w'} ${x}" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'card:${encodeURIComponent(JSON.stringify(c))}')" onclick="handleCardClick(${encodeURIComponent(JSON.stringify(c))})" ${a}>${c.v}<b>${c.c=='w'?'🌈':'⚡'}</b></div>`;
+    return `<div class="cd ${colMap[c.c]||'u-w'} ${x}" onclick="handleCardClick(${encodeURIComponent(JSON.stringify(c))})" ${a}>${c.v}<b>${c.c=='w'?'🌈':'⚡'}</b></div>`;
   }
-  return `<div class="cd ${red(c)?'r':''} ${x}" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'card:${c}')" onclick="handleCardClick(${c})" ${a}>${L[c%13].replace('T',10)}${svgs[su(c)]}</div>`;
+  return `<div class="cd ${red(c)?'r':''} ${x}" onclick="handleCardClick(${c})" ${a}>${L[c%13].replace('T',10)}${svgs[su(c)]}</div>`;
 },
 bk=n=>`<span class="bks">${'<div class="cd bk sm"></div>'.repeat(Math.min(n,13))}</span>`,
 $=id=>document.getElementById(id);
@@ -156,13 +157,13 @@ function melds(h){let m=[];for(let r=0;r<13;r++){let g=h.filter(c=>c%13==r);if(g
 for(let s=0;s<4;s++)for(let a=0;a<13;a++)for(let b=a+2;b<13;b++){let u=[];for(let r=a;r<=b;r++)u.push(s*13+r);if(u.every(c=>h.includes(c)))m.push(u)}return m}
 const dw=h=>{let b=h.reduce((t,c)=>t+Math.min(c%13+1,10),0);for(let m of melds(h))b=Math.min(b,dw(h.filter(c=>!m.includes(c))));return b};
 
-let S, host=1, R=null, iv, T, cfv=-1, sel=0, kn=0, code='', nm='', me=Math.random().toString(36).slice(2,8);
+let S, host=1, iv, T, cfv=-1, sel=0, kn=0, code='', nm='', me=Math.random().toString(36).slice(2,8);
 let botDiff = 'medium';
 let maxPlayersOpt = 4;
 let autofillBots = true;
 let lastTurnPlayer = -1;
 
-// --- UNO DECK GENERATOR ---
+// --- UNO DECK ---
 function createUnoDeck() {
   let dk = [], colors = ['r','y','g','b'];
   colors.forEach(c => {
@@ -205,10 +206,10 @@ const G={
 uno:{n:4,maxN:4,name:'UNO',ico:`<svg viewBox="0 0 24 24" fill="#ff3d71"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>`,col:'#ff3d71',p:'2–4 players',d:'Match color or action. Play Skip, Reverse, Draw 2 & Wild +4!',
 rules:[
   '<strong>Goal:</strong> Be the first player to shed all cards in your hand.',
-  '<strong>Matching:</strong> Tap or drag any card matching either the current color, number, or symbol on top of the discard pile.',
+  '<strong>Matching:</strong> Tap any card matching the current color, number, or symbol on top of the pile.',
   '<strong>Action Cards:</strong> 🚫 Skip, 🔄 Reverse, +2 Draw Two.',
-  '<strong>Wild Cards:</strong> 🌈 Wild lets you pick a new active color. 🌈+4 Wild Draw Four forces next player to draw 4 and skips them!',
-  '<strong>Drawing:</strong> Tap the Draw Pile if you have no valid cards to play.'
+  '<strong>Wild Cards:</strong> 🌈 Wild picks new color. 🌈+4 draws 4 for next player and skips them.',
+  '<strong>Drawing:</strong> Tap the Draw Pile if you have no valid cards.'
 ],
 init(S){
   let d=createUnoDeck();
@@ -254,12 +255,12 @@ apply(S,p,m){
     if(m.c.v=='+4') {
       let nextP = (S.turn + S.dir + n) % n;
       for(let i=0;i<4;i++) S.h[nextP].push(S.dk.shift()||createUnoDeck()[0]);
-      S.turn = (S.turn + S.dir + n) % n;
+      S.turn = (S.turn + S.dir) % n;
     }
     return;
   }
   S.curClr = m.c.c;
-  if(m.c.v=='🚫') S.turn = (S.turn + S.dir + n) % n;
+  if(m.c.v=='🚫') S.turn = (S.turn + S.dir) % n;
   else if(m.c.v=='🔄') S.dir *= -1;
   else if(m.c.v=='+2') {
     let nextP = (S.turn + S.dir + n) % n;
@@ -277,13 +278,11 @@ bot(S,p){
   return res;
 },
 ui:S=>`<div class="row">
-  <div onclick="Q('d')" style="cursor:pointer;text-align:center" ondragover="event.preventDefault()" ondrop="event.preventDefault();Q('d')">
+  <div onclick="Q('d')" style="cursor:pointer;text-align:center">
     <div class="cd bk"></div>
     <small style="display:block;margin-top:4px;font-weight:700">${S.dk.length} cards</small>
   </div>
-  <div ondragover="event.preventDefault()" ondrop="event.preventDefault();let data=event.dataTransfer.getData('text/plain');if(data.startsWith('card:'))P(JSON.parse(data.split('card:')[1]))">
-    ${cd(S.top.at(-1),'pop')}
-  </div>
+  <div>${cd(S.top.at(-1),'pop')}</div>
   <div class="sui" style="border-color:${S.curClr=='r'?'#ff3d71':S.curClr=='y'?'#ffe14d':S.curClr=='g'?'#22c55e':'#00b3ff'}">
     ${S.curClr=='r'?'🔴':S.curClr=='y'?'🟡':S.curClr=='g'?'🟢':'🔵'}
   </div>
@@ -294,14 +293,13 @@ ${S.pendingClr && S.turn==myi() ? `<div class="ctr"><p>Choose Wild Color:</p><di
   <div class="clr-btn" style="background:#22c55e" onclick="mv(myi(),{clrSelect:'g'})"></div>
   <div class="clr-btn" style="background:#00b3ff" onclick="mv(myi(),{clrSelect:'b'})"></div>
 </div></div>` : ''}`,
-hint:(S,my,mi)=>my&&!G.uno.legal(S,mi).length?'· No matching card: tap the draw pile':''},
+hint:(S,my,mi)=>my&&!G.uno.legal(S,mi).length?'· Tap draw pile to draw card':''},
 
 poker:{n:4,maxN:4,name:'Texas Hold\'em',ico:`<svg viewBox="0 0 24 24" fill="#22c55e"><path d="M12 2C8 2 5 5 5 9c0 3 2 5.5 5 6.5L9 22h6l-1-6.5c3-1 5-3.5 5-6.5 0-4-3-7-7-7z"/></svg>`,col:'#22c55e',p:'2–4 players',d:'Bet, Raise, or Bluff! Standard Texas Hold\'em rules with pot calculation.',
 rules:[
-  '<strong>Goal:</strong> Form the best 5-card poker hand using your 2 hole cards and 5 community cards.',
-  '<strong>Rounds:</strong> Pre-flop, Flop (3 cards), Turn (1 card), River (1 card).',
-  '<strong>Actions:</strong> **Check/Call** matches current bet. **Raise** increases the bet. **Fold** forfeits your hand.',
-  '<strong>Showdown:</strong> Highest ranking hand takes the entire accumulated pot!'
+  '<strong>Goal:</strong> Form best 5-card poker hand.',
+  '<strong>Actions:</strong> Call, Raise, or Fold.',
+  '<strong>Showdown:</strong> Highest hand wins pot!'
 ],
 init(S){
   let d=deck();
@@ -311,43 +309,31 @@ init(S){
 can:()=>1,pick:()=>0,tap:()=>0,
 apply(S,p,m){
   if(S.folded[p]) return false;
-  if(m.act=='fold') { S.folded[p]=true; }
-  else if(m.act=='call') {
-    let diff = S.curBet - S.bets[p];
-    S.bets[p] += diff; S.pot += diff;
-  } else if(m.act=='raise') {
-    let raiseAmt = S.curBet + 10;
-    let diff = raiseAmt - S.bets[p];
-    S.bets[p] += diff; S.pot += diff; S.curBet = raiseAmt;
-  }
+  if(m.act=='fold') S.folded[p]=true;
+  else if(m.act=='call') { let diff = S.curBet - S.bets[p]; S.bets[p]+=diff; S.pot+=diff; }
+  else if(m.act=='raise') { let r=S.curBet+10, diff=r-S.bets[p]; S.bets[p]+=diff; S.pot+=diff; S.curBet=r; }
   snd.play('deal');
   let active = S.seats.map((_,i)=>i).filter(i=>!S.folded[i]);
-  if(active.length===1) {
-    S.over={t:`🏆 ${S.seats[active[0]].name} wins pot of $${S.pot} (all folded)!`}; snd.play('win'); return;
-  }
-  let nextTurn = (p+1)%S.seats.length;
-  while(S.folded[nextTurn]) nextTurn = (nextTurn+1)%S.seats.length;
-  
-  if(S.seats.every((_,i)=>S.folded[i] || S.bets[i]===S.curBet)) {
+  if(active.length===1) { S.over={t:`🏆 ${S.seats[active[0]].name} wins pot $${S.pot}!`}; snd.play('win'); return; }
+  let next = (p+1)%S.seats.length;
+  while(S.folded[next]) next=(next+1)%S.seats.length;
+  if(S.seats.every((_,i)=>S.folded[i]||S.bets[i]===S.curBet)) {
     if(S.stage=='preflop') { S.stage='flop'; S.comm.push(...S.dk.splice(0,3)); }
     else if(S.stage=='flop') { S.stage='turn'; S.comm.push(S.dk.shift()); }
     else if(S.stage=='turn') { S.stage='river'; S.comm.push(S.dk.shift()); }
     else if(S.stage=='river') {
       let bestW=-1, bestEv={score:-1};
-      active.forEach(i=>{
-        let ev = evalPokerHand([...S.h[i], ...S.comm]);
-        if(ev.score > bestEv.score) { bestEv = ev; bestW = i; }
-      });
+      active.forEach(i=>{ let ev = evalPokerHand([...S.h[i], ...S.comm]); if(ev.score>bestEv.score){bestEv=ev;bestW=i;} });
       S.over={t:`🏆 ${S.seats[bestW].name} wins $${S.pot} with ${bestEv.name}!`}; snd.play('win'); return;
     }
   }
-  S.turn = nextTurn;
+  S.turn = next;
 },
 bot(S,p){
   if(S.folded[p]) return {act:'fold'};
-  let rand = Math.random();
-  if(rand>0.8) return {act:'raise'};
-  if(rand>0.1) return {act:'call'};
+  let r=Math.random();
+  if(r>0.8) return {act:'raise'};
+  if(r>0.1) return {act:'call'};
   return {act:'fold'};
 },
 ui:S=>`<div class="ctr" style="padding:16px">
@@ -361,12 +347,10 @@ ui:S=>`<div class="ctr" style="padding:16px">
 </div>`,
 hint:S=>`· Stage: ${S.stage.toUpperCase()}`},
 
-bj:{n:2,maxN:2,name:'Blackjack',ico:`<svg viewBox="0 0 24 24" fill="#ffe14d"><path d="M12 2L2 19h20L12 2z"/></svg>`,col:'#ffe14d',p:'1-2 players vs Dealer',d:'Beat the Dealer\'s hand without busting over 21!',
+bj:{n:2,maxN:2,name:'Blackjack',ico:`<svg viewBox="0 0 24 24" fill="#ffe14d"><path d="M12 2L2 19h20L12 2z"/></svg>`,col:'#ffe14d',p:'1-2 players vs Dealer',d:'Beat Dealer without busting over 21!',
 rules:[
-  '<strong>Goal:</strong> Get a card value closer to 21 than the dealer without going over 21.',
-  '<strong>Card Values:</strong> Face cards = 10, Aces = 1 or 11, Number cards = face value.',
-  '<strong>Actions:</strong> **Hit** (take another card), **Stand** (keep hand).',
-  '<strong>Dealer Rules:</strong> Dealer must draw cards until their total reaches at least 17.'
+  '<strong>Goal:</strong> Get card value closer to 21 than dealer.',
+  '<strong>Actions:</strong> Hit or Stand.'
 ],
 init(S){
   let d=deck();
@@ -378,11 +362,8 @@ apply(S,p,m){
   let h=S.h[p];
   if(m.act=='hit') {
     h.push(S.dk.shift()); snd.play('deal');
-    let val = h.reduce((s,c)=>s+Math.min(c%13+1,10),0);
-    if(val>21) { S.st[p]=1; S.turn=1-p; }
-  } else if(m.act=='stand') {
-    S.st[p]=1; S.turn=1-p; snd.play('click');
-  }
+    if(h.reduce((s,c)=>s+Math.min(c%13+1,10),0)>21){ S.st[p]=1; S.turn=1-p; }
+  } else if(m.act=='stand') { S.st[p]=1; S.turn=1-p; snd.play('click'); }
   if(S.st[0]&&S.st[1]){
     let calc = hand => {
       let t=0, aces=0;
@@ -408,12 +389,10 @@ ui:S=>`<div class="ctr">
 </div>`,
 hint:(S,my,mi)=>`· Hand Value: ${S.h[mi].reduce((s,c)=>s+Math.min(c%13+1,10),0)}`},
 
-hearts:{n:4,maxN:4,name:'Hearts',ico:`<svg viewBox="0 0 24 24" fill="#ff3d71"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,col:'#ff3d71',p:'2–4 players',d:'Dodge hearts and the Queen of Spades. Lowest score wins!',
+hearts:{n:4,maxN:4,name:'Hearts',ico:`<svg viewBox="0 0 24 24" fill="#ff3d71"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,col:'#ff3d71',p:'2–4 players',d:'Dodge hearts and Queen of Spades. Lowest score wins!',
 rules:[
-  '<strong>Goal:</strong> Avoid taking penalty cards (Hearts and Queen of Spades). Lowest score wins!',
-  '<strong>Leading:</strong> Player holding 2♣ leads first trick.',
-  '<strong>Following Suit:</strong> Must follow led suit if possible.',
-  '<strong>Scoring:</strong> Each Heart = 1 pt, Queen of Spades = 13 pts.'
+  '<strong>Goal:</strong> Avoid taking penalty hearts and Queen of Spades.',
+  '<strong>Following Suit:</strong> Must follow led suit if possible.'
 ],
 init(S){let d=deck(), cpr=Math.floor(52/S.seats.length);S.h=S.seats.map((_,i)=>d.slice(i*cpr,(i+1)*cpr).sort(srt));S.tr=[];S.lt=[];S.pt=S.seats.map(()=>0);S.hb=0;S.first=1;let starter=S.h.findIndex(h=>h.includes(1));S.turn=starter>=0?starter:0},
 legal(S,p){let h=S.h[p],t=S.tr;if(t.length){let f=h.filter(c=>su(c)==su(t[0].c));return f.length?f:h}if(S.first&&h.includes(1))return[1];let n=h.filter(c=>su(c)!=3);return S.hb||!n.length?h:n},
@@ -426,15 +405,15 @@ bot(S,p){let l=[...G.hearts.legal(S,p)];
 if(botDiff=='easy') return {c:l[Math.floor(Math.random()*l.length)]};
 l.sort((a,b)=>hv(a)-hv(b));let t=S.tr;
 if(t.length&&!l.some(c=>su(c)==su(t[0].c)))return{c:l.includes(37)?37:l.sort((a,b)=>(su(b)==3)-(su(b)==3)||hv(b)-hv(a))[0]};return{c:botDiff=='hard'?l[0]:l[Math.floor(l.length/2)]||l[0]}},
-ui:S=>`<div class="trick" ondragover="event.preventDefault()" ondrop="event.preventDefault();let data=event.dataTransfer.getData('text/plain');if(data.startsWith('card:'))P(parseInt(data.split('card:')[1]))">${S.tr.map(t=>`<div>${cd(t.c,'pop')}<small>${S.seats[t.p].name}</small></div>`).join('')||'<span style="opacity:.8">Last trick: '+(S.lt.map(t=>SU[su(t.c)]+L[t.c%13]).join(' ')||'—')+'</span>'}</div>`,
+ui:S=>`<div class="trick">${S.tr.map(t=>`<div>${cd(t.c,'pop')}<small>${S.seats[t.p].name}</small></div>`).join('')||'<span style="opacity:.8">Last trick: '+(S.lt.map(t=>SU[su(t.c)]+L[t.c%13]).join(' ')||'—')+'</span>'}</div>`,
 hint:S=>`· Scores: ${S.seats.map((s,i)=>s.name+': '+S.pt[i]).join(' | ')} ${S.hb?'· ♥ broken':''}`},
 
-kic:{n:4,maxN:4,name:'Kings in Corner',ico:`<svg viewBox="0 0 24 24" fill="#a855f7"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/></svg>`,col:'#a855f7',p:'2–4 players',d:'Build alternating-color piles. Drag cards or whole piles freely!',
+kic:{n:4,maxN:4,name:'Kings in Corner',ico:`<svg viewBox="0 0 24 24" fill="#a855f7"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/></svg>`,col:'#a855f7',p:'2–4 players',d:'Build alternating-color piles. Tap any card then tap slot!',
 rules:[
-  '<strong>Goal:</strong> Empty your hand completely by playing cards onto the 8 board piles.',
-  '<strong>Building Piles:</strong> Cards must be built in **alternating colors** and **descending rank** (Red 6 on Black 7).',
-  '<strong>Dragging Piles:</strong> Drag entire column stacks onto other columns to combine them!',
-  '<strong>Empty Columns:</strong> Emptying a column leaves an open space where **any card** can be placed.'
+  '<strong>Goal:</strong> Empty your hand completely by playing cards onto board piles.',
+  '<strong>Building Piles:</strong> Alternating colors (red on black) and descending rank.',
+  '<strong>Tap to Play:</strong> Tap a card in your hand (it glows gold), then tap any slot/pile on the board to play it!',
+  '<strong>Merging Piles:</strong> Tap a pile on the board to select it, then tap another pile to combine them!'
 ],
 init(S){let d=deck();S.h=S.seats.map(()=>d.splice(0,7).sort(srt));S.pl=[[],[],[],[],[],[],[],[]];[0,1,2,3].forEach(i=>S.pl[i].push(d.shift()));S.dk=d;S.turn=0;S.viewPile=-1;G.kic.draw(S)},
 draw(S){if(S.dk.length)S.h[S.turn].push(S.dk.shift());S.h[S.turn].sort(srt)},
@@ -462,16 +441,16 @@ for(let a=0;a<8;a++)for(let b=0;b<8;b++)if(a!=b&&S.pl[a].length&&S.pl[b].length)
   if(topB!=null && red(botA)!=red(topB) && hv(botA)==hv(topB)-1)return{a,b};
 }
 let e=[4,5,6,7].find(i=>!S.pl[i].length);if(e!=null&&h.length>1)return{c:h.reduce((a,b)=>b%13>a%13?b:a),to:e};return{e:1}},
-ui:S=>`<div class="kg">${[0,4,1,5,-1,6,2,7,3].map(i=>i<0?`<div class="ctrd">📚 ${S.dk.length}<br><button class="b" onclick="Q('e')">End Turn</button></div>`:`<div class="slot ${i>=4?'cn':''}${sel&&sel.t=='p'&&sel.i==i?'sl':''}" onclick="Q(${i})" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');let d=event.dataTransfer.getData('text/plain');if(d.startsWith('card:')) P(parseInt(d.split('card:')[1])); else if(d.startsWith('pile:')) mv(myi(),{a:parseInt(d.split('pile:')[1]),b:${i}})">${S.pl[i].length?`<div draggable="true" ondragstart="event.dataTransfer.setData('text/plain','pile:${i}')" style="display:inline-block">${cd(S.pl[i].at(-1))}</div>`+`<i>${S.pl[i].length}</i>`:'<em>'+(i>=4?'♚':'')+'</em>'}</div>`).join('')}</div>` +
+// 3x3 Grid: Corners are 4,5,6,7. Edges are 0,1,2,3. Center is Deck/End Turn (-1).
+ui:S=>`<div class="kg">${[4,0,5,1,-1,2,6,3,7].map(i=>i<0?`<div class="ctrd">📚 ${S.dk.length}<br><button class="b" onclick="Q('e')">End Turn</button></div>`:`<div class="slot ${i>=4?'cn':''}${sel&&sel.t=='p'&&sel.i==i?'sl':''}" onclick="Q(${i})">${S.pl[i].length?cd(S.pl[i].at(-1))+`<i>${S.pl[i].length}</i>`:'<em>'+(i>=4?'♚':'')+'</em>'}</div>`).join('')}</div>` +
 (S.viewPile>=0 && S.pl[S.viewPile] && S.pl[S.viewPile].length ? `<div style="text-align:center;margin-top:10px;font-size:13px;opacity:.9">Cards in pile #${S.viewPile+1}:</div><div class="pile-preview">${S.pl[S.viewPile].map(c=>cd(c,'sm')).join('')}</div>` : ''),
-hint:()=>'· Drag cards/piles or tap to combine & play'},
+hint:()=>'· Tap card in hand, then tap slot on board (or tap board pile to select & merge)'},
 
 gin:{n:2,maxN:2,name:'Gin Rummy',ico:`<svg viewBox="0 0 24 24" fill="#22d3a0"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>`,col:'#22d3a0',p:'2 players',d:'Make sets and runs, then knock with low deadwood.',
 rules:[
-  '<strong>Goal:</strong> Form your 10 cards into **Sets** (3 or 4 of a kind) and **Runs** (3+ consecutive cards of same suit).',
-  '<strong>Deadwood:</strong> Unmatched cards in your hand = Deadwood points.',
-  '<strong>Turn Structure:</strong> Draw 1 card (Stock or Discard pile) then Discard 1 card.',
-  '<strong>Knocking:</strong> When unmatched Deadwood is 10 points or less, armed Knock lets you end the round!'
+  '<strong>Goal:</strong> Form 10 cards into Sets and Runs.',
+  '<strong>Turn:</strong> Draw 1 card from Stock or Discard, then Discard 1.',
+  '<strong>Knocking:</strong> When unmatched deadwood ≤ 10, tap Knock and discard.'
 ],
 init(S){let d=deck();S.h=[d.splice(0,10).sort(srt),d.splice(0,10).sort(srt)];S.up=[d.shift()];S.dk=d;S.turn=0;S.ph=0},
 can:S=>S.ph==1,pick:(S,c)=>({x:c,k:kn?1:0}),
@@ -482,8 +461,8 @@ if(m.k){let o=S.h[1-p],a=dw(h),b=dw(o),w=p,pts=b-a+(a?0:25);if(a>=b){w=1-p;pts=a
 if(S.dk.length<3){S.over={t:'Stock ran out: draw game!'};return}S.ph=0;S.turn=1-p},
 bot(S,p){let h=S.h[p];if(!S.ph){let u=S.up.at(-1),H=[...h,u],b=Math.min(...H.map(x=>dw(H.filter(y=>y!=x))));return{d:b<dw(h)?'u':'s'}}
 let b=h.map(x=>[dw(h.filter(y=>y!=x)),x]).sort((a,b)=>a[0]-b[0])[0];return{x:b[1],k:b[0]<=7?1:0}},
-ui:S=>`<div class="row"><div onclick="Q('s')" style="cursor:pointer;text-align:center" ondragover="event.preventDefault()" ondrop="event.preventDefault();Q('s')"><div class="cd bk"></div><small style="display:block;margin-top:4px;font-weight:700">${S.dk.length} Stock</small></div><div onclick="Q('u')" style="cursor:pointer" ondragover="event.preventDefault()" ondrop="event.preventDefault();Q('u')">${cd(S.up.at(-1),'ok')}</div><button class="${kn?'b':'b3'}" onclick="kn=!kn;snd.play('click');render()">${kn?'🔔 Knock armed':'🔔 Knock'}</button></div>`,
-hint:(S,my,mi)=>`· ${my?(S.ph?'Discard a card (drag or click)':'Draw: stock or discard'):''} · Deadwood: ${dw(S.h[mi])}`}
+ui:S=>`<div class="row"><div onclick="Q('s')" style="cursor:pointer;text-align:center"><div class="cd bk"></div><small style="display:block;margin-top:4px;font-weight:700">${S.dk.length} Stock</small></div><div onclick="Q('u')" style="cursor:pointer">${cd(S.up.at(-1),'ok')}</div><button class="${kn?'b':'b3'}" onclick="kn=!kn;snd.play('click');render()">${kn?'🔔 Knock armed':'🔔 Knock'}</button></div>`,
+hint:(S,my,mi)=>`· ${my?(S.ph?'Tap card in hand to discard':'Draw stock or discard'):''} · Deadwood: ${dw(S.h[mi])}`}
 };
 
 // --- PEERJS MULTIPLAYER ---
